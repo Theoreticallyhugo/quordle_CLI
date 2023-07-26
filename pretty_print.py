@@ -2,29 +2,103 @@ from colorama import Fore, Back, Style
 from random import randint
 
 def right_place(in_str):
+    """
+    print any given string with the colourscheme assigned to letters in the 
+    right place, and then reset to normal. no carriage return
+    """
     print(Fore.BLACK + Back.GREEN + in_str, end="")
     print(Style.RESET_ALL, end="")
 
 
 def wrong_place(in_str):
+    """
+    print any given string with the colourscheme assigned to letters in the 
+    wrong place, and then reset to normal. no carriage return
+    """
     print(Fore.BLACK + Back.YELLOW + in_str, end="")
     print(Style.RESET_ALL, end="")
 
 
 def not_included(in_str):
+    """
+    print any given string with the colourscheme assigned to letters not
+    included, and then reset to normal. no carriage return
+    """
     print(Fore.WHITE + Back.LIGHTBLACK_EX + in_str, end="")
     print(Style.RESET_ALL, end="")
     
 
 def not_used(in_str):
+    """
+    print any given string with the colourscheme assigned to letters not used,
+    and then reset to normal. no carriage return
+    """
     print(Fore.BLACK + Back.WHITE + in_str, end="")
     print(Style.RESET_ALL, end="")
 
 
-def print_use(in_str, pos, show=True):
+def set_up_keyboard_use():
     """
+    create dictionary of each letter of the keyboard, with a list of int, 
+    representing their use:
+    0: unused
+    1: not_included
+    2: wrong_place
+    3: right_place
+    in a certain position
     0 1
     2 3
+    initialised to game start/ no use yet
+    """
+    keyboard_use = {"ä": [0,0,0,0],
+                    "ö": [0,0,0,0],
+                    "ü": [0,0,0,0],
+                    "ß": [0,0,0,0],}
+
+    for i in range(26):
+        keyboard_use[chr(ord("a") + i)] = [0,0,0,0]
+    return keyboard_use
+
+def set_up_rand_keyboard_use():
+    """
+    create dictionary of each letter of the keyboard, with a list of int, 
+    representing their use:
+    0: unused
+    1: not_included
+    2: wrong_place
+    3: right_place
+    in a certain position
+    0 1
+    2 3
+    initialised to a random state
+    """
+    keyboard_use = {"ä": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
+                    "ö": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
+                    "ü": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
+                    "ß": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
+    }
+
+    for i in range(26):
+        keyboard_use[chr(ord("a") + i)] = [randint(0,3),randint(0,3),randint(0,3),randint(0,3)]
+    return keyboard_use
+
+
+def set_up_lines():
+    """
+    this determines the keyboard layout
+    """
+    lines = ["qwertzuiopü", 
+             "asdfghjklöä", 
+             "yxcvbnmß"]
+    return lines
+
+
+def print_use(in_str, pos, show=True):
+    """
+    for a given letter, print its status for a given position as follows
+    0 1
+    2 3
+    set show to false, if only a coloured field, without the character is desired
     """
     # 0: unused
     # 1: not_included
@@ -48,6 +122,12 @@ def print_use(in_str, pos, show=True):
 
 
 def print_keyboard(lines, show=True):
+    """
+    print the use status of each letter of the keyboard, as defined by lines.
+    lines is a list of strings, where each string is one lines of the keyboard. 
+    show true prints the character into all four of its fields, whilst false 
+    prints it only into the top right one
+    """
     for line in lines:
         for letter in line:
             print_use(letter,0)
@@ -61,77 +141,38 @@ def print_keyboard(lines, show=True):
         print("\n")
 
 
-right_place("a")
-wrong_place("b")
-not_included("c")
-print("d")
 
-# 0: unused
-# 1: not_included
-# 2: wrong_place
-# 3: right_place
+# === EXAMPLE USE ===
 
-keyboard_use = {"ä": [0,0,0,0],
-                "ö": [0,0,0,0],
-                "ü": [0,0,0,0],
-                "ß": [0,0,0,0],}
+# set up a variable to track the use of letters
+# initialised to game start/ no use
+keyboard_use = set_up_keyboard_use()
 
-for i in range(26):
-    keyboard_use[chr(ord("a") + i)] = [0,0,0,0]
-
-print(keyboard_use)
-
-
-lines = ["qwertzuiopü", 
-         "asdfghjklöä", 
-         "yxcvbnmß"]
-
+# set up the keyboard layout
+lines = set_up_lines()
 
 # === print the keyboard ===
 
-for line in lines:
-    for letter in line:
-        print_use(letter,0)
-        print_use(letter,1,False)
-        print(" ",end="")
-    print("")
-    for letter in line:
-        print_use(letter,2,False)
-        print_use(letter,3,False)
-        print(" ",end="")
-    print("\n")
+# print first with only one letter and then with all four, to show both
+# view options
+print("game start clean")
+print_keyboard(lines, False)
+print("game start convoluted")
+print_keyboard(lines, True)
+
 
 # === test it with rand values ===
 
-keyboard_use = {"ä": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
-                "ö": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
-                "ü": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
-                "ß": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
-}
-
-for i in range(26):
-    keyboard_use[chr(ord("a") + i)] = [randint(0,3),randint(0,3),randint(0,3),randint(0,3)]
-
-print(keyboard_use)
-
-
-lines = ["qwertzuiopü", 
-         "asdfghjklöä", 
-         "yxcvbnmß"]
+# set up a variable to track the use of letters
+# initialised to a random state
+keyboard_use = set_up_rand_keyboard_use()
 
 
 # === print the keyboard ===
 
-for line in lines:
-    for letter in line:
-        print_use(letter,0)
-        print_use(letter,1,False)
-        print(" ",end="")
-    print("")
-    for letter in line:
-        print_use(letter,2,False)
-        print_use(letter,3,False)
-        print(" ",end="")
-    print("\n")
-
+# print first with only one letter and then with all four, to show both
+# view options
+print("random state clean")
+print_keyboard(lines, False)
+print("random state convoluted")
 print_keyboard(lines, True)

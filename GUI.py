@@ -178,23 +178,42 @@ class GUI:
         # number of tires so far
         cur_tries = len(tries[0])
 
+        # TODO stop printing the new tries for already found words
+
+        # print the top two words (index zero and ones)
         for i in range(cur_tries):
+            # i iterates through the tries of each word
+            # generates the rows
+            # print row number
             print(f"{str(i + 1).rjust(2,'0')}: ", end="")
             for j in range(2):
-                # print the word
+                # j switches between left and right word of the first two
+                # generates the columns
                 for k in range(5):
+                    # print the word step by step, for a column
+                    # tries[column][row][word/tuple][letter/number]
                     self.print_try_letter(tries[j][i][0][k], tries[j][i][1][k])
+                # space between the two columns
                 print("    ", end="")
+            # switch to next row
             print("")
 
+        # print the unused tries
         for i in range(10-cur_tries):
+            # print the rownumber
             print(f"{str(i + cur_tries + 1).rjust(2,'0')}: ", end="")
+            # print the empty word
             self.not_used("     ")
+            # print space between words
             print("    ", end="")
+            # print the second empty word
             self.not_used("     ")
+            # switch to next row
             print("")
 
         print("\n")
+
+        # print the bottom two words
         for i in range(cur_tries):
             print(f"{str(i + 1).rjust(2,'0')}: ", end="")
             for j in range(2, 4):
@@ -204,6 +223,7 @@ class GUI:
                 print("    ", end="")
             print("")
 
+        # print the unused tries
         for i in range(10-cur_tries):
             print(f"{str(i + cur_tries + 1).rjust(2,'0')}: ", end="")
             self.not_used("     ")

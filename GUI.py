@@ -179,6 +179,7 @@ class GUI:
         cur_tries = len(tries[0])
 
         for i in range(cur_tries):
+            print(f"{str(i + 1).rjust(2,'0')}: ", end="")
             for j in range(2):
                 # print the word
                 for k in range(5):
@@ -186,15 +187,29 @@ class GUI:
                 print("    ", end="")
             print("")
 
+        for i in range(10-cur_tries):
+            print(f"{str(i + cur_tries + 1).rjust(2,'0')}: ", end="")
+            self.not_used("     ")
+            print("    ", end="")
+            self.not_used("     ")
+            print("")
+
         print("\n")
         for i in range(cur_tries):
+            print(f"{str(i + 1).rjust(2,'0')}: ", end="")
             for j in range(2, 4):
                 # print the word
                 for k in range(5):
                     self.print_try_letter(tries[j][i][0][k], tries[j][i][1][k])
-                print("   ", end="")
+                print("    ", end="")
             print("")
 
-        
+        for i in range(10-cur_tries):
+            print(f"{str(i + cur_tries + 1).rjust(2,'0')}: ", end="")
+            self.not_used("     ")
+            print("    ", end="")
+            self.not_used("     ")
+            print("")
 
+        print("\n")
 

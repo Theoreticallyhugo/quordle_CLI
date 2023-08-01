@@ -154,6 +154,10 @@ class GUI:
             print("\n")
 
     def print_try_letter(self, letter, state):
+        """
+        printe a singular character, with the background colour being 
+        determined by the integer provided in state
+        """
         if state == 1:
             self.not_included(letter)
         elif state == 2:
@@ -161,7 +165,7 @@ class GUI:
         elif state == 3:
             self.right_place(letter)
 
-    def print_tries(self):
+    def print_tries(self, words, matches):
         """
         print all the tries and the colour coded info
         this info is supplied explicitly, as it is calculated elsewhere in 
@@ -169,67 +173,98 @@ class GUI:
         1: not_included
         2: wrong_place
         3: right_place
+        :param words: list of strings
+        :param matches: tuple of tuples, of tuples, of ints
+                        tuple containing four tuples, one for each word that is 
+                        to be guessed,
+                        containing one tuple for each guess, 
+                        containing the match data of the guess per character
         """
-        # we expect to have ten tries max
-        tries = [[("agsdr",(1,3,2,1,3)), ("soetp", (3,2,1,3,2)), ("fjdht", (2,3,1,2,3))],
-                 [("widjg", (2,3,2,1,2)), ("chfjt", (3,3,3,3,3)), ("lsoeg", (2,2,3,1,2))],
-                 [("widue", (1,2,1,1,3)), ("chget", (1,1,1,1,1)), ("uwoei", (1,2,1,3,2))],
-                 [("asuet", (2,3,3,2,1)), ("cutod", (2,2,2,2,2)), ("aswqd", (3,2,1,2,3))]]
-        # number of tires so far
-        cur_tries = len(tries[0])
 
-        # TODO stop printing the new tries for already found words
+        words_len = len(words)
+        top_left_len = len(matches[0])
+        top_right_len = len(matches[1])
+        bot_left_len = len(matches[2])
+        bot_right_len = len(matches[3])
 
-        # print the top two words (index zero and ones)
-        for i in range(cur_tries):
-            # i iterates through the tries of each word
-            # generates the rows
-            # print row number
-            print(f"{str(i + 1).rjust(2,'0')}: ", end="")
-            for j in range(2):
-                # j switches between left and right word of the first two
-                # generates the columns
-                for k in range(5):
-                    # print the word step by step, for a column
-                    # tries[column][row][word/tuple][letter/number]
-                    self.print_try_letter(tries[j][i][0][k], tries[j][i][1][k])
-                # space between the two columns
+        # go through all words for the top two boxes
+        for word_index in range(10):
+            print(f"{str(word_index + 1).rjust(2,'0')}: ", end="")
+            if word_index >= words_len:
+                # print the rest of the unused tries 
+                self.not_used("     ")
                 print("    ", end="")
-            # switch to next row
-            print("")
-
-        # print the unused tries
-        for i in range(10-cur_tries):
-            # print the rownumber
-            print(f"{str(i + cur_tries + 1).rjust(2,'0')}: ", end="")
-            # print the empty word
-            self.not_used("     ")
-            # print space between words
-            print("    ", end="")
-            # print the second empty word
-            self.not_used("     ")
-            # switch to next row
-            print("")
-
-        print("\n")
-
-        # print the bottom two words
-        for i in range(cur_tries):
-            print(f"{str(i + 1).rjust(2,'0')}: ", end="")
-            for j in range(2, 4):
-                # print the word
-                for k in range(5):
-                    self.print_try_letter(tries[j][i][0][k], tries[j][i][1][k])
+                self.not_used("     ")
+            else:
+                # first print the left box 
+                if word_index >= top_left_len:
+                    # this word has been solved but there are more tries to
+                    # print for other words
+                    self.not_used("     ")
+                else:
+                    for i in range(5):
+                        # access the word and its info on the matching with the
+                        # index word_index. within this word print the character 
+                        # found at index i 
+                        # words[which word][which letter]
+                        # matches[which box][which word][which letter]
+                        self.print_try_letter(words[word_index][i], matches[0][word_index][i])
+                # print space between the two columns
                 print("    ", end="")
+                # now print the right box 
+                if word_index >= top_right_len:
+                    # this word has been solved but there are more tries to
+                    # print for other words
+                    self.not_used("     ")
+                else:
+                    for i in range(5):
+                        # access the word and its info on the matching with the
+                        # index word_index. within this word print the character 
+                        # found at index i 
+                        # words[which word][which letter]
+                        # matches[which box][which word][which letter]
+                        self.print_try_letter(words[word_index][i], matches[1][word_index][i])
             print("")
 
-        # print the unused tries
-        for i in range(10-cur_tries):
-            print(f"{str(i + cur_tries + 1).rjust(2,'0')}: ", end="")
-            self.not_used("     ")
-            print("    ", end="")
-            self.not_used("     ")
+        print("")
+        # go through all words for the bot two boxes
+        for word_index in range(10):
+            print(f"{str(word_index + 1).rjust(2,'0')}: ", end="")
+            if word_index >= words_len:
+                # print the rest of the unused tries 
+                self.not_used("     ")
+                print("    ", end="")
+                self.not_used("     ")
+            else:
+                # first print the left box 
+                if word_index >= bot_left_len:
+                    # this word has been solved but there are more tries to
+                    # print for other words
+                    self.not_used("     ")
+                else:
+                    for i in range(5):
+                        # access the word and its info on the matching with the
+                        # index word_index. within this word print the character 
+                        # found at index i 
+                        # words[which word][which letter]
+                        # matches[which box][which word][which letter]
+                        self.print_try_letter(words[word_index][i], matches[2][word_index][i])
+                # print space between the two columns
+                print("    ", end="")
+                # now print the right box 
+                if word_index >= bot_right_len:
+                    # this word has been solved but there are more tries to
+                    # print for other words
+                    self.not_used("     ")
+                else:
+                    for i in range(5):
+                        # access the word and its info on the matching with the
+                        # index word_index. within this word print the character 
+                        # found at index i 
+                        # words[which word][which letter]
+                        # matches[which box][which word][which letter]
+                        self.print_try_letter(words[word_index][i], matches[3][word_index][i])
             print("")
+        print("")
 
-        print("\n")
 

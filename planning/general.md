@@ -1,0 +1,3 @@
+- write gui module first
+	- allows for testing of game logic with immediate visual feedback
+	- first write it in an open way, then close it and create a simple interface for the class in order to enforce proper distinciton between domains

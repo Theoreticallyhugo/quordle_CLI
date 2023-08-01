@@ -1,17 +1,10 @@
-from random import randint
 from colorama import Fore, Back, Style
 import os
  
 
 class GUI:
     def __init__(self) -> None:
-        self.keyboard_use = {}
-        # set keyboard to default which is game start, can be overridden
-        self.set_up_keyboard_use()
-        # this determines the layout the keyboard is print
-        self.keyboard_layout = ["qwertzuiopü", 
-                                "asdfghjklöä", 
-                                "yxcvbnmß"]
+        pass
 
     @staticmethod
     def clear_screen():
@@ -22,7 +15,8 @@ class GUI:
         else:
             os.system('clear')
 
-    def right_place(self, in_str):
+    @staticmethod
+    def right_place(in_str):
         """
         print any given string with the colourscheme assigned to letters in the 
         right place, and then reset to normal. no carriage return
@@ -31,7 +25,8 @@ class GUI:
         print(Style.RESET_ALL, end="")
 
 
-    def wrong_place(self, in_str):
+    @staticmethod
+    def wrong_place(in_str):
         """
         print any given string with the colourscheme assigned to letters in the 
         wrong place, and then reset to normal. no carriage return
@@ -40,7 +35,8 @@ class GUI:
         print(Style.RESET_ALL, end="")
 
 
-    def not_included(self, in_str):
+    @staticmethod
+    def not_included(in_str):
         """
         print any given string with the colourscheme assigned to letters not
         included, and then reset to normal. no carriage return
@@ -49,7 +45,8 @@ class GUI:
         print(Style.RESET_ALL, end="")
         
 
-    def not_used(self, in_str):
+    @staticmethod
+    def not_used(in_str):
         """
         print any given string with the colourscheme assigned to letters not used,
         and then reset to normal. no carriage return
@@ -57,56 +54,7 @@ class GUI:
         print(Fore.BLACK + Back.WHITE + in_str, end="")
         print(Style.RESET_ALL, end="")
 
-
-    def set_up_keyboard_use(self):
-        """
-        create dictionary of each letter of the keyboard, with a list of int, 
-        representing their use:
-        0: unused
-        1: not_included
-        2: wrong_place
-        3: right_place
-        in a certain position
-        0 1
-        2 3
-        initialised to game start/ no use yet
-        """
-        self.keyboard_use = {"ä": [0,0,0,0],
-                        "ö": [0,0,0,0],
-                        "ü": [0,0,0,0],
-                        "ß": [0,0,0,0],}
-
-        for i in range(26):
-            self.keyboard_use[chr(ord("a") + i)] = [0,0,0,0]
-        return self.keyboard_use
-
-    def set_up_rand_keyboard_use(self):
-        """
-        create dictionary of each letter of the keyboard, with a list of int, 
-        representing their use:
-        0: unused
-        1: not_included
-        2: wrong_place
-        3: right_place
-        in a certain position
-        0 1
-        2 3
-        initialised to a random state
-        """
-        self.keyboard_use = {"ä": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
-                        "ö": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
-                        "ü": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
-                        "ß": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
-        }
-
-        for i in range(26):
-            self.keyboard_use[chr(ord("a") + i)] = [randint(0,3),randint(0,3),randint(0,3),randint(0,3)]
-        return self.keyboard_use
-
-    def update_letter_use(self, letter: str, use: list):
-        self.keyboard_use[letter] = use
-
-    def print_keyboard_letter_use(self, in_str, pos, show=True):
+    def __print_keyboard_letter_use(self, keyboard_use, in_str, pos, show=True):
         """
         for a given letter, print its status for a given position as follows
         0 1
@@ -124,36 +72,36 @@ class GUI:
                 print_str = in_str.upper()
         else:
             print_str = " "
-        if self.keyboard_use[in_str][pos] == 0:
+        if keyboard_use[in_str][pos] == 0:
             self.not_used(print_str)
-        elif self.keyboard_use[in_str][pos] == 1:
+        elif keyboard_use[in_str][pos] == 1:
             self.not_included(print_str)
-        elif self.keyboard_use[in_str][pos] == 2:
+        elif keyboard_use[in_str][pos] == 2:
             self.wrong_place(print_str)
-        elif self.keyboard_use[in_str][pos] == 3:
+        elif keyboard_use[in_str][pos] == 3:
             self.right_place(print_str)
 
 
-    def print_keyboard(self, show=True):
+    def print_keyboard(self, keyboard_use,  keyboard_layout, show=True):
         """
         print the use status of each letter of the keyboard, as defined by lines.
         lines is a list of strings, where each string is one lines of the keyboard. 
         show true prints the character into all four of its fields, whilst false 
         prints it only into the top right one
         """
-        for line in self.keyboard_layout:
+        for line in keyboard_layout:
             for letter in line:
-                self.print_keyboard_letter_use(letter,0)
-                self.print_keyboard_letter_use(letter,1,show)
+                self.__print_keyboard_letter_use(keyboard_use, letter,0)
+                self.__print_keyboard_letter_use(keyboard_use, letter,1,show)
                 print(" ",end="")
             print("")
             for letter in line:
-                self.print_keyboard_letter_use(letter,2,show)
-                self.print_keyboard_letter_use(letter,3,show)
+                self.__print_keyboard_letter_use(keyboard_use, letter,2,show)
+                self.__print_keyboard_letter_use(keyboard_use, letter,3,show)
                 print(" ",end="")
             print("\n")
 
-    def print_try_letter(self, letter, state):
+    def __print_try_letter(self, letter, state):
         """
         printe a singular character, with the background colour being 
         determined by the integer provided in state
@@ -197,7 +145,7 @@ class GUI:
                         # found at index i 
                         # words[which word][which letter]
                         # matches[which box][which word][which letter]
-                        self.print_try_letter(words[word_index][i], matches[left_i][word_index][i])
+                        self.__print_try_letter(words[word_index][i], matches[left_i][word_index][i])
                 # print space between the two columns
                 print("    ", end="")
                 # now print the right box 
@@ -212,7 +160,7 @@ class GUI:
                         # found at index i 
                         # words[which word][which letter]
                         # matches[which box][which word][which letter]
-                        self.print_try_letter(words[word_index][i], matches[right_i][word_index][i])
+                        self.__print_try_letter(words[word_index][i], matches[right_i][word_index][i])
             print("")
 
     def print_tries(self, words, matches):
@@ -230,12 +178,6 @@ class GUI:
                         containing one tuple for each guess, 
                         containing the match data of the guess per character
         """
-
-        words_len = len(words)
-        top_left_len = len(matches[0])
-        top_right_len = len(matches[1])
-        bot_left_len = len(matches[2])
-        bot_right_len = len(matches[3])
 
         # print all words for the top two boxes
         self.__print_try_box_pair(words, matches)

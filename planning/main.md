@@ -1,0 +1,2 @@
+- be called from the commandline with a path to a txt file with a list of german 5 letter words (in all lowercase), and either --quordle or --sequence
+- read the file, convert all words to 

@@ -13,13 +13,61 @@ class Quordle:
         self.gui = GUI()
         # words tried so far 
         self.tries = []
+        self.keyboard_use = {}
+        # this determines the layout the keyboard is print
+        self.keyboard_layout = ["qwertzuiopü", 
+                                "asdfghjklöä", 
+                                "yxcvbnmß"]
+
+    def set_up_keyboard_use(self):
+        """
+        create dictionary of each letter of the keyboard, with a list of int, 
+        representing their use:
+        0: unused
+        1: not_included
+        2: wrong_place
+        3: right_place
+        in a certain position
+        0 1
+        2 3
+        initialised to game start/ no use yet
+        """
+        self.keyboard_use = {"ä": [0,0,0,0],
+                        "ö": [0,0,0,0],
+                        "ü": [0,0,0,0],
+                        "ß": [0,0,0,0],}
+
+        for i in range(26):
+            self.keyboard_use[chr(ord("a") + i)] = [0,0,0,0]
+        return self.keyboard_use
+
+    def update_keyboard_letter(self, letter, wordle_index, use):
+        # for wordle_index and use reference set_up_keyboard_use
+        # if the use is a higher match than previously saved, update the value
+        if use > self.keyboard_use[letter][wordle_index]:
+            self.keyboard_use[letter][wordle_index] = use
+
+    def update_keyboard_use(self):
+        for word_index, word in enumerate(self.tries):
+            for letter_index, letter in enumerate(word):
+                for i in range(4):
+                    try:
+                        use = self.wordles[i].matches[word_index][letter_index]
+                        self.update_keyboard_letter(letter, i, use)
+                    except:
+                        pass
+
+    def update_letter_use(self, letter: str, use: list):
+        # FIXME is this in use?
+        self.keyboard_use[letter] = use
 
     def setup(self):
-        # TODO add the random word stuff in here 
-        # self.wordles = [Wordle("hello"),
-        #            Wordle("daily"),
-        #            Wordle("targa"),
-        #            Wordle("flyer")]
+        """
+        set keyboard to unused and create the list of wordles
+        """
+        # set keyboard to default which is game start, can be overridden
+        self.set_up_keyboard_use()
+        # create list of wordles
         self.wordles = []
         used_indices = []
         valid_len = len(self.valid_words) - 1
@@ -47,6 +95,7 @@ class Quordle:
         # print the latest info on tries
         self.gui.print_tries(self.tries, self.get_matches())
         # print the latest info on keyboard usage
+        self.gui.print_keyboard(self.keyboard_use, self.keyboard_layout, False)
 
     def game_loop(self):
         # setup
@@ -76,6 +125,7 @@ class Quordle:
                 wordle.add_new_try(new_try)
             # save try to list of all tries
             self.tries.append(new_try)
+            self.update_keyboard_use()
 
             # if all words have been matched
             if self.wordles[0].matched and \

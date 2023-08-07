@@ -97,6 +97,20 @@ class Quordle:
         # print the latest info on keyboard usage
         self.gui.print_keyboard(self.keyboard_use, self.keyboard_layout, False)
 
+    def game_end_screen(self):
+        self.gui.clear_screen()
+        # print the latest info on tries
+        self.gui.print_tries(self.tries, self.get_matches())
+        words = []
+        success = []
+        tries = []
+        for wordle in self.wordles:
+            words.append(wordle.target_word)
+            success.append(wordle.matched)
+            tries.append(len(wordle.matches))
+        self.gui.print_results(words, success, tries)
+
+
     def game_loop(self):
         # setup
         self.setup()
@@ -133,12 +147,14 @@ class Quordle:
                 self.wordles[2].matched and \
                 self.wordles[3].matched:
                 # print the latest info on the gamestate
-                self.update_gui()
+                # self.update_gui()
+                self.game_end_screen()
                 print("yay you got em all")
                 break
             if len(self.tries) == 10:
                 # print the latest info on the gamestate
-                self.update_gui()
+                # self.update_gui()
+                self.game_end_screen()
                 print("sadly you didnt make it")
                 break
                 

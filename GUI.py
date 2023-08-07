@@ -54,6 +54,15 @@ class GUI:
         print(Fore.BLACK + Back.WHITE + in_str, end="")
         print(Style.RESET_ALL, end="")
 
+    @staticmethod
+    def not_guessed(in_str):
+        """
+        print any given string with the colourscheme assigned to letters not used,
+        and then reset to normal. no carriage return
+        """
+        print(Fore.BLACK + Back.RED + in_str, end="")
+        print(Style.RESET_ALL, end="")
+
     def __print_keyboard_letter_use(self, keyboard_use, in_str, pos, show=True):
         """
         for a given letter, print its status for a given position as follows
@@ -187,4 +196,23 @@ class GUI:
         self.__print_try_box_pair(words, matches, True)
         print("")
 
+    def print_results(self, words: list, success: list, tries: list):
+        for index, word in enumerate(words):
+            if index % 2 == 0:
+                # if even, first print word, then tries 
+                print(" ", end="")
+                if success[index]:
+                    self.right_place(word)
+                else:
+                    self.not_guessed(word)
+                print(f" {str(tries[index]).rjust(2,'0')}    ", end="") 
+            else:
+                # if uneven, first print tries, then word
+                print(f"{str(tries[index]).rjust(2,'0')} ", end="") 
+                if success[index]:
+                    self.right_place(word)
+                else:
+                    self.not_guessed(word)
+                print("\n")
+        
 

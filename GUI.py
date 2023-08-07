@@ -203,15 +203,23 @@ class GUI:
                 print(" ", end="")
                 if success[index]:
                     self.right_place(word)
+                    print(" ", end="")
+                    self.not_included(str(tries[index]).rjust(2,'0'))
+                    print("    ", end="") 
                 else:
                     self.not_guessed(word)
-                print(f" {str(tries[index]).rjust(2,'0')}    ", end="") 
+                    print(" ", end="")
+                    self.not_guessed("  ")
+                    print("    ", end="") 
             else:
                 # if uneven, first print tries, then word
-                print(f"{str(tries[index]).rjust(2,'0')} ", end="") 
                 if success[index]:
+                    self.not_included(str(tries[index]).rjust(2,'0'))
+                    print(" ", end="")
                     self.right_place(word)
                 else:
+                    self.not_guessed("  ")
+                    print(" ", end="")
                     self.not_guessed(word)
                 print("\n")
         

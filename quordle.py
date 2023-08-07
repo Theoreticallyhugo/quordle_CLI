@@ -53,9 +53,9 @@ class Quordle:
                 for i in range(4):
                     try:
                         use = self.wordles[i].matches[word_index][letter_index]
-                        self.update_keyboard_letter(letter, i, use)
                     except:
-                        pass
+                        use = 1
+                    self.update_keyboard_letter(letter, i, use)
 
     def update_letter_use(self, letter: str, use: list):
         # FIXME is this in use?

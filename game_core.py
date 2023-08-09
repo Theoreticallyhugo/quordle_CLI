@@ -3,10 +3,12 @@ from GUI import GUI
 from random import randint
 
 class GameCore:
-    def __init__(self, valid_words) -> None:
+    def __init__(self, valid_words, quordle=True) -> None:
         # list of valid 5 letter words
         assert isinstance(valid_words, list) or isinstance(valid_words, tuple)
         self.valid_words = valid_words
+        # which game is to be played
+        self.quordle = quordle
         # four instances of wordle, which make up quordle
         self.wordles = []
         # gui interface class
@@ -83,17 +85,28 @@ class GameCore:
             self.wordles.append(Wordle(self.valid_words[index]))
             
 
-    def get_matches(self):
+    def get_matches(self, quordle=True):
         # get data on all matches from all four wordles
         matches = []
-        for wordle in self.wordles:
+        for index, wordle in enumerate(self.wordles):
             matches.append(wordle.matches)
+            matchlen = len(wordle.matches)
+            # if were not playing wordle, meaning were playing sequence,
+            # we stop updating the sub-wordles after the one that were
+            # matching
+            if not quordle and not wordle.matched:
+                for _ in range(3-index):
+                    templist = []
+                    for _ in range(matchlen):
+                        templist.append((0,0,0,0,0))
+                    matches.append(templist)
+                
         return matches
 
     def update_gui(self):
         self.gui.clear_screen()
         # print the latest info on tries
-        self.gui.print_tries(self.tries, self.get_matches())
+        self.gui.print_tries(self.tries, self.get_matches(self.quordle))
         # print the latest info on keyboard usage
         self.gui.print_keyboard(self.keyboard_use, self.keyboard_layout, False)
 
@@ -111,7 +124,7 @@ class GameCore:
         self.gui.print_results(words, success, tries)
 
 
-    def game_loop(self, quordle = True):
+    def game_loop(self):
         # setup
         self.setup()
         self.gui.clear_screen()
@@ -138,17 +151,8 @@ class GameCore:
                     break
             # then send it to all wordles and look for matches
             for wordle in self.wordles:
-                # if the wordle has no tries saved, add all that are in the list
-                if len(wordle.tries) == 0:
-                    for cur_try in self.tries:
-                        wordle.add_new_try(cur_try)
-                # now add the new_try
+                # add the new_try
                 wordle.add_new_try(new_try)
-                # if were not playing wordle, meaning were playing sequence,
-                # we stop updating the sub-wordles after the one that were
-                # matching
-                if not quordle and not wordle.matched:
-                    break
             # save try to list of all tries
             self.tries.append(new_try)
             self.update_keyboard_use()
@@ -164,12 +168,6 @@ class GameCore:
                 print("yay you got em all")
                 break
             if len(self.tries) == 10:
-                # update the wordles that havent been solved yet
-                for wordle in self.wordles:
-                    # if the wordle has no tries saved, add all that are in the list
-                    if len(wordle.tries) == 0:
-                        for cur_try in self.tries:
-                            wordle.add_new_try(cur_try)
                 # print the latest info on the gamestate
                 self.game_end_screen()
                 print("sadly you didnt make it")

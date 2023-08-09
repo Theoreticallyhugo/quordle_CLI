@@ -115,7 +115,9 @@ class GUI:
         printe a singular character, with the background colour being 
         determined by the integer provided in state
         """
-        if state == 1:
+        if state == 0:
+            self.not_used(letter)
+        elif state == 1:
             self.not_included(letter)
         elif state == 2:
             self.wrong_place(letter)
@@ -133,7 +135,7 @@ class GUI:
         right_i = 1 + (int(bot) * 2)
         right_len = len(matches[right_i])
 
-        # go through all words for the top two boxes
+        # go through all words for the two boxes on the same line
         for word_index in range(10):
             print(f"{str(word_index + 1).rjust(2,'0')}: ", end="")
             if word_index >= words_len:

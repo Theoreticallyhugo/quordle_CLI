@@ -1,0 +1,4 @@
+- add links to DWDS
+- improve GUI
+- add docstrings
+- test the file reading!

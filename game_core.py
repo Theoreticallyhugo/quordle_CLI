@@ -2,7 +2,7 @@ from wordle import Wordle
 from GUI import GUI
 from random import randint
 
-class Quordle:
+class GameCore:
     def __init__(self, valid_words) -> None:
         # list of valid 5 letter words
         assert isinstance(valid_words, list) or isinstance(valid_words, tuple)
@@ -111,7 +111,7 @@ class Quordle:
         self.gui.print_results(words, success, tries)
 
 
-    def game_loop(self):
+    def game_loop(self, quordle = True):
         # setup
         self.setup()
         self.gui.clear_screen()
@@ -138,7 +138,17 @@ class Quordle:
                     break
             # then send it to all wordles and look for matches
             for wordle in self.wordles:
+                # if the wordle has no tries saved, add all that are in the list
+                if len(wordle.tries) == 0:
+                    for cur_try in self.tries:
+                        wordle.add_new_try(cur_try)
+                # now add the new_try
                 wordle.add_new_try(new_try)
+                # if were not playing wordle, meaning were playing sequence,
+                # we stop updating the sub-wordles after the one that were
+                # matching
+                if not quordle and not wordle.matched:
+                    break
             # save try to list of all tries
             self.tries.append(new_try)
             self.update_keyboard_use()
@@ -154,8 +164,13 @@ class Quordle:
                 print("yay you got em all")
                 break
             if len(self.tries) == 10:
+                # update the wordles that havent been solved yet
+                for wordle in self.wordles:
+                    # if the wordle has no tries saved, add all that are in the list
+                    if len(wordle.tries) == 0:
+                        for cur_try in self.tries:
+                            wordle.add_new_try(cur_try)
                 # print the latest info on the gamestate
-                # self.update_gui()
                 self.game_end_screen()
                 print("sadly you didnt make it")
                 break

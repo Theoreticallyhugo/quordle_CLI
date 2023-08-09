@@ -3,7 +3,7 @@ call this file with the wordlist (a path to it)
 add --quordle or --sequence and this file will start the right game
 """
 import argparse
-from quordle import Quordle
+from game_core import GameCore
 
 def get_word_list(path: str):
     try:
@@ -41,15 +41,14 @@ if __name__ == "__main__":
     args = get_args()
 
     wordlist = get_word_list(path=args.path)
+    game_core = GameCore(wordlist)
 
     if args.quordle:
         # run quordle
-        quordle = Quordle(wordlist)
-
-        quordle.game_loop()
+        game_core.game_loop()
     elif args.sequence:
         # run sequence
-        print("not implemented yet")
+        game_core.game_loop(False)
     else:
         print("invalid option. add -q or -s")
 

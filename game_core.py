@@ -7,7 +7,7 @@ class GameCore:
         # list of valid 5 letter words
         assert isinstance(valid_words, list) or isinstance(valid_words, tuple)
         self.valid_words = valid_words
-        # which game is to be played
+        # which game is to be played. needed for sequence
         self.quordle = quordle
         # four instances of wordle, which make up quordle
         self.wordles = []
@@ -43,25 +43,42 @@ class GameCore:
             self.keyboard_use[chr(ord("a") + i)] = [0,0,0,0]
         return self.keyboard_use
 
-    def update_keyboard_letter(self, letter, wordle_index, use):
+    def update_keyboard_letter(self, letter, wordle_index, use, downgrade=False):
         # for wordle_index and use reference set_up_keyboard_use
         # if the use is a higher match than previously saved, update the value
+        # downgrade=True means that we also dont only up, but also downgrade
+        # donwgrade is sequence specific
+        if downgrade:
+            self.keyboard_use[letter][wordle_index] = use
+            return
         if use > self.keyboard_use[letter][wordle_index]:
             self.keyboard_use[letter][wordle_index] = use
 
     def update_keyboard_use(self):
         for word_index, word in enumerate(self.tries):
             for letter_index, letter in enumerate(word):
+                unmatched = False
                 for i in range(4):
+
+                    # === sequence mod start ===
+                    # if were not playing wordle, meaning were playing sequence,
+                    # we stop updating the letters for sub-wordles after the
+                    # one that were matching
+                    if not self.quordle and unmatched or \
+                        not self.quordle and self.wordles[i].matched:
+                        self.update_keyboard_letter(letter, i, 1, True)
+                        continue
+
+                    if not self.wordles[i].matched and not unmatched:
+                        unmatched = True
+
+                    # === sequence mod stop ===
+
                     try:
                         use = self.wordles[i].matches[word_index][letter_index]
                     except:
                         use = 1
                     self.update_keyboard_letter(letter, i, use)
-
-    # def update_letter_use(self, letter: str, use: list):
-        # FIXME is this in use?
-        # self.keyboard_use[letter] = use
 
     def setup(self):
         """
@@ -90,6 +107,8 @@ class GameCore:
         matches = []
         for index, wordle in enumerate(self.wordles):
             matches.append(wordle.matches)
+
+            # === sequence mod start ===
             matchlen = len(wordle.matches)
             # if were not playing wordle, meaning were playing sequence,
             # we stop updating the sub-wordles after the one that were
@@ -97,9 +116,14 @@ class GameCore:
             if not quordle and not wordle.matched:
                 for _ in range(3-index):
                     templist = []
+                    # the gui only prints a word, if there is match info
+                    # provided. so, we provided the zeros as match info,
+                    # saying that it needs to be printed, but not giving any
+                    # info on whats matching
                     for _ in range(matchlen):
                         templist.append((0,0,0,0,0))
                     matches.append(templist)
+            # === sequence mod stop ===
                 
         return matches
 
@@ -139,6 +163,10 @@ class GameCore:
                 new_try = input()
                 if new_try == "":
                     self.update_gui()
+                elif new_try == "!cheat":
+                    for wordle in self.wordles:
+                        print(wordle.target_word)
+                new_try = new_try.lower()
                 # make sure its a valid try 
                 if len(new_try) != 5:
                     # no words that dont have 5 letters

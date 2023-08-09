@@ -2,3 +2,5 @@
 - improve GUI
 - add docstrings
 - test the file reading!
+- fix the keyboard in sequence
+- lowercase user input

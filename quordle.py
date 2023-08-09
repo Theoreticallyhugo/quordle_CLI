@@ -57,9 +57,9 @@ class Quordle:
                         use = 1
                     self.update_keyboard_letter(letter, i, use)
 
-    def update_letter_use(self, letter: str, use: list):
+    # def update_letter_use(self, letter: str, use: list):
         # FIXME is this in use?
-        self.keyboard_use[letter] = use
+        # self.keyboard_use[letter] = use
 
     def setup(self):
         """
@@ -124,6 +124,8 @@ class Quordle:
             while 42:
                 # first get the try
                 new_try = input()
+                if new_try == "":
+                    self.update_gui()
                 # make sure its a valid try 
                 if len(new_try) != 5:
                     # no words that dont have 5 letters

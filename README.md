@@ -1,5 +1,9 @@
 # quordle_CLI
 a command line based quordle clone
+
+### differences to the original quordle
+- this game does not allow the player to input the same word twice, as it would not benefit the player. This is a conscious decision and not a mistake.
+- just like with the original quordle, the player can cheat. instead of going online and googling todays quordle results, the player can enter ```!cheat``` which will display the words to be guessed.
 ## data installation
 **as data, the program needs two files: ```rate_worte.txt``` and ```ziel_worte.txt```. the following describes methods for getting the two default files, but they can be replaced by any other file with the same name and format.**
 the process has been tested on MacOS and Linux Arch

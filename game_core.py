@@ -3,10 +3,11 @@ from GUI import GUI
 from random import randint
 
 class GameCore:
-    def __init__(self, valid_words, quordle=True) -> None:
+    def __init__(self, target_words, guess_words, quordle=True) -> None:
         # list of valid 5 letter words
-        assert isinstance(valid_words, list) or isinstance(valid_words, tuple)
-        self.valid_words = valid_words
+        # assert isinstance(valid_words, list) or isinstance(valid_words, tuple)
+        self.guess_words = guess_words
+        self.target_words = target_words
         # which game is to be played. needed for sequence
         self.quordle = quordle
         # four instances of wordle, which make up quordle
@@ -89,7 +90,7 @@ class GameCore:
         # create list of wordles
         self.wordles = []
         used_indices = []
-        valid_len = len(self.valid_words) - 1
+        valid_len = len(self.target_words) - 1
         for _ in range(4):
             # find an unused index 
             while 42:
@@ -99,7 +100,7 @@ class GameCore:
                     break
             # to the list of wordles, append a new wordle, which is initialised
             # with the unique index we found earlier
-            self.wordles.append(Wordle(self.valid_words[index]))
+            self.wordles.append(Wordle(self.target_words[index]))
             
 
     def get_matches(self, quordle=True):
@@ -174,7 +175,7 @@ class GameCore:
                 if new_try in self.tries:
                     # no words that have been tried before
                     continue
-                if new_try in self.valid_words:
+                if new_try in self.guess_words:
                     # no words that arent in the dictionary
                     break
             # then send it to all wordles and look for matches

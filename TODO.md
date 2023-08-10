@@ -5,9 +5,6 @@
 - add script for getting wordlist
 - curate wordlist
 - DO I NEED TWO LISTS?
-- yes i need two lists
-	- `curl "https://www.ids-mannheim.de/fileadmin/kl/derewo/derewo-v-100000t-2009-04-30-0.1.zip" -o stuff.zip
-	- then ```unzip stuff.zip```
-	- `curl "https://www.ids-mannheim.de/fileadmin/kl/derewo/derewo-v-ww-bll-320000g-2012-12-31-1.0.zip" -o grund.zip
-	- then `unzip grund
+- yes i need two lists TODO implement them
+-  if there is no data folder, ask the user whether they want to run the installation script(mby only if theyre on posix)
  

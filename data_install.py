@@ -1,4 +1,10 @@
 import os
+import sys
+
+if os.name == 'nt':
+    print("this file hasn't been tested on a non POSIX system (eg. windows).")
+    if input("would you like to continue? [y/N]: ") not in ["y", "Y"]:
+        sys.exit()
 
 os.system('mkdir data')
 os.system('curl "https://www.ids-mannheim.de/fileadmin/kl/derewo/derewo-v-100000t-2009-04-30-0.1.zip" -o data/rate_worte.zip')

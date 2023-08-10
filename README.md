@@ -9,7 +9,7 @@ the process has been tested on MacOS and Linux Arch
 		- if not installed, use the package manager of your choice, eg:
 			- MacOS: `brew install curl
 			- Linux Ubuntu: `sudo apt install curl
-			- Linux Arch: `sudo packman -S curl
+			- Linux Arch: `sudo pacman -S curl
 	- then ensure that you have a working internet connection and run the data_install.py script, eg: `python data_install.py
 - **WINDOWS**: if you are running windows, the necessary commands may be installed, or possibly obtained through chocolatey, cygwin or WSL. otherwise, follow the manual installation steps.
 - **MANUAL**: 

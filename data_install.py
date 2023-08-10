@@ -1,17 +1,35 @@
 import os
-import sys
+import requests, zipfile, io
+from process_wordlist import process_DeReWo_wordlist_2012
 
-if os.name == 'nt':
-    print("this file hasn't been tested on a non POSIX system (eg. windows).")
-    if input("would you like to continue? [y/N]: ") not in ["y", "Y"]:
-        sys.exit()
+def download_and_process_data():
+    # make the folder if it doesnt exist yet
+    try:
+        os.mkdir(os.path.join(os.curdir, "data"))
+    except:
+        pass
 
-os.system('mkdir data')
-os.system('curl "https://www.ids-mannheim.de/fileadmin/kl/derewo/derewo-v-100000t-2009-04-30-0.1.zip" -o data/rate_worte.zip')
-os.system('unzip data/rate_worte -d data')
-os.system('curl "https://www.ids-mannheim.de/fileadmin/kl/derewo/derewo-v-ww-bll-320000g-2012-12-31-1.0.zip" -o data/ziel_worte.zip')
-os.system('unzip data/ziel_worte -d data')
-os.system('rm -r data/*.zip')
-os.system('rm -r data/*.pdf')
-os.system('mv data/derewo-v-100000t-2009-04-30-0.1 data/rate_worte.txt')
-os.system('mv data/derewo-v-ww-bll-320000g-2012-12-31-1.0.txt data/ziel_worte.txt')
+    # download the zip archive
+    r = requests.get("https://www.ids-mannheim.de/fileadmin/kl/derewo/derewo-v-ww-bll-320000g-2012-12-31-1.0.zip")
+
+    # create the zip object from the downloaded data
+    z = zipfile.ZipFile(io.BytesIO(r.content))
+
+    # make sure to only extract the one file we want
+    member = None
+    for name in z.namelist():
+        if name.endswith(".txt"):
+            member = [name]
+
+    # now finally extract the file and save it
+    z.extractall(os.path.join(os.curdir, "data"), members=member)
+
+    # process the file we downloaded in a way that the game can use it
+    process_DeReWo_wordlist_2012()
+
+    # remove the old file we dont need anymore
+    os.system('rm data/derewo-v-ww-bll-320000g-2012-12-31-1.0.txt')
+
+
+if __name__ == "__main__":
+    download_and_process_data()

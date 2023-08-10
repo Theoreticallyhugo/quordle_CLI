@@ -7,4 +7,6 @@
 - DO I NEED TWO LISTS?
 - yes i need two lists TODO implement them
 -  if there is no data folder, ask the user whether they want to run the installation script(mby only if theyre on posix)
+- i may have confused the lists....... need to be checked for which one is which and what to use where
+- install data through python packages instead of cli commands for portability
  

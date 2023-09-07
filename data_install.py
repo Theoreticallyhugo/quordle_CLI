@@ -38,8 +38,10 @@ def download_and_process_data():  # FEEDBACK missing docstring
     # remove the old file we dont need anymore
 
     # FEEDBACK I know this info won't change any time soon but you could try to
-    # find a way not to hardcode this part; the following worked:
-    # os.remove(os.path.join(os.curdir, "data", member[0]))
+    # find a way not to hardcode this part
+    # Edit: So apparently I am not allowed to provide code examples. Forget
+    # there was ever a detailed suggestion here and try playing around with
+    # the os library
     os.system('rm data/derewo-v-ww-bll-320000g-2012-12-31-1.0.txt')
 
 

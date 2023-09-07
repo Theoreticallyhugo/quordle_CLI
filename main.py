@@ -12,9 +12,9 @@ from data_install import download_and_process_data
 def get_word_list(path: str):  # FEEDBACK missing docstring
     try:
         with open(path, "r") as r:
-            # FEEDBACK You could simplify this using a generator expression:
-            # wordlist = (line.strip("\n").lower() for line in r)
-            # wordlist = list(wordlist)
+            # FEEDBACK You could simplify this using a generator expression
+            # Forget there was ever a detailed code suggestion here and figure
+            # it out yourself XD
             wordlist = r.readlines()
             for i in range(len(wordlist)):
                 wordlist[i] = wordlist[i].strip("\n").lower()

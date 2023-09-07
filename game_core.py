@@ -97,12 +97,9 @@ class GameCore:
         used_indices = []
 
         # FEEDBACK while 42 is nice but you could make this way easier with
-        # random sampling:
-        # if len(self.target_words) >= 4:
-        #   used_indices = random.sample(range(len(self.target_words)), 4)
-        #   self.wordles = [Wordle(self.target_words[i]) for i in used_indices]
-        # else:
-        #   ...
+        # random sampling
+        # Edit: Forget there was ever a code suggestion here and figure it out
+        # yourself XD
 
         valid_len = len(self.target_words) - 1
         for _ in range(4):

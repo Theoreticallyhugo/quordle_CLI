@@ -1,3 +1,4 @@
+# I guess this will be deleted later?
 from GUI import GUI
 from random import randint
 

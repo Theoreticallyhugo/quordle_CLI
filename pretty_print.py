@@ -1,9 +1,11 @@
+# FEEDBACK a header would be nice :)
+# I guess this was just for testing the gui functions? Will you delete it later?
 from colorama import Fore, Back, Style
 from random import randint
 
-def right_place(in_str):  # expected 2 blank lines
+def right_place(in_str):
     """
-    print any given string with the colourscheme assigned to letters in the  # trailing whitespace
+    print any given string with the colourscheme assigned to letters in the
     right place, and then reset to normal. no carriage return
     """
     print(Fore.BLACK + Back.GREEN + in_str, end="")
@@ -12,7 +14,7 @@ def right_place(in_str):  # expected 2 blank lines
 
 def wrong_place(in_str):
     """
-    print any given string with the colourscheme assigned to letters in the  # trailing whitespace
+    print any given string with the colourscheme assigned to letters in the
     wrong place, and then reset to normal. no carriage return
     """
     print(Fore.BLACK + Back.YELLOW + in_str, end="")
@@ -50,16 +52,16 @@ def set_up_keyboard_use():
     2 3
     initialised to game start/ no use yet
     """
-    keyboard_use = {"ä": [0,0,0,0],  # missing whitespace after ,
-                    "ö": [0,0,0,0],  # missing whitespace after ,
-                    "ü": [0,0,0,0],  # missing whitespace after ,
-                    "ß": [0,0,0,0],}  # missing whitespace after ,
+    keyboard_use = {"ä": [0,0,0,0],
+                    "ö": [0,0,0,0],
+                    "ü": [0,0,0,0],
+                    "ß": [0,0,0,0],}
 
     for i in range(26):
-        keyboard_use[chr(ord("a") + i)] = [0,0,0,0]  # missing whitespace after ,
+        keyboard_use[chr(ord("a") + i)] = [0,0,0,0]
     return keyboard_use
 
-def set_up_rand_keyboard_use():  # expected 2 blank lines
+def set_up_rand_keyboard_use():
     """
     create dictionary of each letter of the keyboard, with a list of int, # trailing whitespace
     representing their use:
@@ -72,14 +74,14 @@ def set_up_rand_keyboard_use():  # expected 2 blank lines
     2 3
     initialised to a random state
     """
-    keyboard_use = {"ä": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],  # missing whitespace after ,
-                    "ö": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],  # missing whitespace after ,
-                    "ü": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],  # missing whitespace after ,
-                    "ß": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],  # missing whitespace after ,
+    keyboard_use = {"ä": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
+                    "ö": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
+                    "ü": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
+                    "ß": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
     }
 
     for i in range(26):
-        keyboard_use[chr(ord("a") + i)] = [randint(0,3),randint(0,3),randint(0,3),randint(0,3)]  # missing whitespace after ,
+        keyboard_use[chr(ord("a") + i)] = [randint(0,3),randint(0,3),randint(0,3),randint(0,3)]
     return keyboard_use
 
 
@@ -87,8 +89,8 @@ def set_up_lines():
     """
     this determines the keyboard layout
     """
-    lines = ["qwertzuiopü",  # trailing whitespace after ,
-             "asdfghjklöä",  # trailing whitespacer after ,
+    lines = ["qwertzuiopü",
+             "asdfghjklöä",
              "yxcvbnmß"]
     return lines
 
@@ -98,7 +100,7 @@ def print_use(in_str, pos, show=True):
     for a given letter, print its status for a given position as follows
     0 1
     2 3
-    set show to false, if only a coloured field, without the character is desired  # line too long
+    set show to false, if only a coloured field, without the character is desired
     """
     # 0: unused
     # 1: not_included
@@ -130,19 +132,19 @@ def print_keyboard(lines, show=True):
     """
     for line in lines:
         for letter in line:
-            print_use(letter,0)  # missing whitespace after ,
-            print_use(letter,1,show)  # missing whitespace after ,
-            print(" ",end="")  # missing whitespace after ,
+            print_use(letter,0)
+            print_use(letter,1,show)
+            print(" ",end="")
         print("")
         for letter in line:
-            print_use(letter,2,show)  # missing whitespace after ,
-            print_use(letter,3,show)  # missing whitespace after ,
-            print(" ",end="")  # missing whitespace after ,
+            print_use(letter,2,show)
+            print_use(letter,3,show)
+            print(" ",end="")
         print("\n")
 
 
 
-# === EXAMPLE USE ===  # too many blank lines
+# === EXAMPLE USE ===
 
 # set up a variable to track the use of letters
 # initialised to game start/ no use

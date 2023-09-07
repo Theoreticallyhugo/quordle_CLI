@@ -1,16 +1,24 @@
+# FEEDBACK a header would be nice :)
 import os
 
-def process_DeReWo_wordlist_2012():  # expected 2 blank lines
-    with open(os.path.join(os.curdir, "data", "derewo-v-ww-bll-320000g-2012-12-31-1.0.txt"), "r", encoding="ISO-8859-15") as r:  # line too long
+def process_DeReWo_wordlist_2012():  # missing docstring
+    # FEEDBACK You could consider breaking down this function into multiple
+    # ones for modularisation
+    with open(os.path.join(os.curdir, "data", "derewo-v-ww-bll-320000g-2012-12-31-1.0.txt"), "r", encoding="ISO-8859-15") as r:
         # get all the words
         lines = r.readlines()
         guess_words = []
         target_words = []
         # for each word
         for line in lines:
+            # FEEDBACK I think it's quite interesting that you did not use any
+            # nltk libraries for this at all and just worked with the structure
+            # of the file. Maybe you could try to play around with that and
+            # see if it improves things? I remember when playing, 'raben' was
+            # not a correct guess word and I had 'gelte' as target word once
             word = line.split(" ")[0].lower()
             if "(" in word:
-                # if the word can be inflected, dissect and,  # trailing whitespace
+                # if the word can be inflected, dissect and,
                 # put it into guess_words
                 stem = word.split("(")[0]
                 suffixes = word.split("(")[1][:-1].split(",")
@@ -25,7 +33,7 @@ def process_DeReWo_wordlist_2012():  # expected 2 blank lines
                             guess_words.append(stem+suffix)
 
             elif len(word) == 5:
-                # if the word cant be inflected and is 5 characters long, # trailing whitespace
+                # if the word cant be inflected and is 5 characters long,
                 # check whether it contains valid characters. if so,
                 # put it into the target words
 
@@ -33,20 +41,20 @@ def process_DeReWo_wordlist_2012():  # expected 2 blank lines
                 correct_letters = True
                 for letter in word:
                     if letter not in ["ä", "ö", "ü", "ß"] and \
-                        not ord("a") <= ord(letter) <= ord("z"):  # continuation line with same indent as next logical line
+                        not ord("a") <= ord(letter) <= ord("z"):
                         correct_letters = False
                         break
                 # add if valid
                 if correct_letters:
                     target_words.append(word)
 
-    with open(os.path.join(os.curdir, "data", "ziel_worte.txt"), "w", encoding="utf-8") as w:  # line too long
+    with open(os.path.join(os.curdir, "data", "ziel_worte.txt"), "w", encoding="utf-8") as w:
         # write only the list of uninflected words
         for word in target_words:
             w.write(word)
             w.write("\n")
 
-    with open(os.path.join(os.curdir, "data", "rate_worte.txt"), "w", encoding="utf-8") as w:  # line too long
+    with open(os.path.join(os.curdir, "data", "rate_worte.txt"), "w", encoding="utf-8") as w:
         # write the lists of inflected and uninflected words
         for word in guess_words:
             w.write(word)

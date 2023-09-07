@@ -1,3 +1,4 @@
+# I guess this will be deleted later?
 from wordle import Wordle
 from GUI import GUI
 
@@ -12,7 +13,7 @@ gui.clear_screen()
 words = []
 while 42:
     # NOTE needs to be provided by game logic
-    # words = ["daily", "words", "think", "trial", "taper", "hoser", "house", "agony", "annoy"]  # line too long
+    # words = ["daily", "words", "think", "trial", "taper", "hoser", "house", "agony", "annoy"]
     # words = wordles[0].tries
 
     # NOTE needs to be provided by game logic

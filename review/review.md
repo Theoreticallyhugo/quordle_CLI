@@ -1,6 +1,8 @@
 # Review für Hugo
-Autorin: Angelina Lorenz
+Autorin: Angelina Lorenz  
 Datum: 06.09.2023  
+Python-Version: 3.11.4  
+Betriebssystem: macOS
 
 #### Anmerkungen zur Review:  
 Diese Review ist unterteilt in zwei Abschnitte: dem [*Playtesting*](#playtesting) und der Codekritik. Im erstgenannten Abschnitt schildere ich meine Erfahrungen als vollkommen naive Testperson (mit minimalem Wissen über den Inhalt der verschiedenen Codedateien) und Letztere ist als Zeilenkommentare im Code zu finden. Die Reihenfolge der Kritikpunkte entspricht dabei der Reihenfolge, wie sie mir aufgefallen sind.  
@@ -17,11 +19,11 @@ Meine Vorgehensweise beim Testen war dabei die folgende:
 - 👎 Unterordner für die verschiedenen Dateien wäre schön, denn die wirken auf den ersten Blick echt erschlagend
 
 **Dateninstallation:**
-- 👎 Bitte Angabe ins README, dass ```requests``` installiert werden muss
+- ❗️ Bitte Angabe ins README, dass ```requests``` installiert werden muss
 - 👍 Ansonsten läuft alles einwandfrei  
 
 **Main:**
-- 👎 Bitte Angabe ins README, dass ```colorama``` installiert werden muss
+- ❗️ Bitte Angabe ins README, dass ```colorama``` installiert werden muss
 - 🤔 Vielleicht wäre Feedback gut, warum ein Eingabewort nicht gültig ist: Meine allererste Eingabe war 'raben' und ich war confused, warum das nicht funktionierte 
 - 👍 Chef's Kiss dafür, dass du eine funktionierende Keyboardanzeige eingebaut hast, obwohl die nicht obligatorisch ist  
 - 👎 An den Argumenten für den Spielstart muss zum Teil noch gefeilt werden. Hier ein paar Beispiele:

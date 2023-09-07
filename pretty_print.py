@@ -1,9 +1,9 @@
 from colorama import Fore, Back, Style
 from random import randint
 
-def right_place(in_str):
+def right_place(in_str):  # expected 2 blank lines
     """
-    print any given string with the colourscheme assigned to letters in the 
+    print any given string with the colourscheme assigned to letters in the  # trailing whitespace
     right place, and then reset to normal. no carriage return
     """
     print(Fore.BLACK + Back.GREEN + in_str, end="")
@@ -12,7 +12,7 @@ def right_place(in_str):
 
 def wrong_place(in_str):
     """
-    print any given string with the colourscheme assigned to letters in the 
+    print any given string with the colourscheme assigned to letters in the  # trailing whitespace
     wrong place, and then reset to normal. no carriage return
     """
     print(Fore.BLACK + Back.YELLOW + in_str, end="")
@@ -26,7 +26,7 @@ def not_included(in_str):
     """
     print(Fore.WHITE + Back.LIGHTBLACK_EX + in_str, end="")
     print(Style.RESET_ALL, end="")
-    
+    # blank line contains whitespace
 
 def not_used(in_str):
     """
@@ -39,7 +39,7 @@ def not_used(in_str):
 
 def set_up_keyboard_use():
     """
-    create dictionary of each letter of the keyboard, with a list of int, 
+    create dictionary of each letter of the keyboard, with a list of int,  # trailing whitespace
     representing their use:
     0: unused
     1: not_included
@@ -50,18 +50,18 @@ def set_up_keyboard_use():
     2 3
     initialised to game start/ no use yet
     """
-    keyboard_use = {"ä": [0,0,0,0],
-                    "ö": [0,0,0,0],
-                    "ü": [0,0,0,0],
-                    "ß": [0,0,0,0],}
+    keyboard_use = {"ä": [0,0,0,0],  # missing whitespace after ,
+                    "ö": [0,0,0,0],  # missing whitespace after ,
+                    "ü": [0,0,0,0],  # missing whitespace after ,
+                    "ß": [0,0,0,0],}  # missing whitespace after ,
 
     for i in range(26):
-        keyboard_use[chr(ord("a") + i)] = [0,0,0,0]
+        keyboard_use[chr(ord("a") + i)] = [0,0,0,0]  # missing whitespace after ,
     return keyboard_use
 
-def set_up_rand_keyboard_use():
+def set_up_rand_keyboard_use():  # expected 2 blank lines
     """
-    create dictionary of each letter of the keyboard, with a list of int, 
+    create dictionary of each letter of the keyboard, with a list of int, # trailing whitespace
     representing their use:
     0: unused
     1: not_included
@@ -72,14 +72,14 @@ def set_up_rand_keyboard_use():
     2 3
     initialised to a random state
     """
-    keyboard_use = {"ä": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
-                    "ö": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
-                    "ü": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
-                    "ß": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
+    keyboard_use = {"ä": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],  # missing whitespace after ,
+                    "ö": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],  # missing whitespace after ,
+                    "ü": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],  # missing whitespace after ,
+                    "ß": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],  # missing whitespace after ,
     }
 
     for i in range(26):
-        keyboard_use[chr(ord("a") + i)] = [randint(0,3),randint(0,3),randint(0,3),randint(0,3)]
+        keyboard_use[chr(ord("a") + i)] = [randint(0,3),randint(0,3),randint(0,3),randint(0,3)]  # missing whitespace after ,
     return keyboard_use
 
 
@@ -87,8 +87,8 @@ def set_up_lines():
     """
     this determines the keyboard layout
     """
-    lines = ["qwertzuiopü", 
-             "asdfghjklöä", 
+    lines = ["qwertzuiopü",  # trailing whitespace after ,
+             "asdfghjklöä",  # trailing whitespacer after ,
              "yxcvbnmß"]
     return lines
 
@@ -98,7 +98,7 @@ def print_use(in_str, pos, show=True):
     for a given letter, print its status for a given position as follows
     0 1
     2 3
-    set show to false, if only a coloured field, without the character is desired
+    set show to false, if only a coloured field, without the character is desired  # line too long
     """
     # 0: unused
     # 1: not_included
@@ -130,19 +130,19 @@ def print_keyboard(lines, show=True):
     """
     for line in lines:
         for letter in line:
-            print_use(letter,0)
-            print_use(letter,1,show)
-            print(" ",end="")
+            print_use(letter,0)  # missing whitespace after ,
+            print_use(letter,1,show)  # missing whitespace after ,
+            print(" ",end="")  # missing whitespace after ,
         print("")
         for letter in line:
-            print_use(letter,2,show)
-            print_use(letter,3,show)
-            print(" ",end="")
+            print_use(letter,2,show)  # missing whitespace after ,
+            print_use(letter,3,show)  # missing whitespace after ,
+            print(" ",end="")  # missing whitespace after ,
         print("\n")
 
 
 
-# === EXAMPLE USE ===
+# === EXAMPLE USE ===  # too many blank lines
 
 # set up a variable to track the use of letters
 # initialised to game start/ no use

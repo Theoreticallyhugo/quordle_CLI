@@ -19,7 +19,7 @@ gui.clear_screen()
 
 
 # NOTE needs to be provided by game logic
-words = ["daily", "words", "think", "trial", "taper", "hoser", "house", "agony", "annoy"]
+words = ["daily", "words", "think", "trial", "taper", "hoser", "house", "agony", "annoy"]  # line too long
 
 # NOTE needs to be provided by game logic
 """
@@ -27,6 +27,7 @@ words = ["daily", "words", "think", "trial", "taper", "hoser", "house", "agony",
 2: wrong_place
 3: right_place
 """
+# for everything in matches: add whitespace after , and check for trailing whitspaces:
 matches = (
             (
                 (1,2,1,1,3),

@@ -1,9 +1,9 @@
 """
-wordle is a basic building block of quordle and sequence. just times four it 
+wordle is a basic building block of quordle and sequence. just times four it  # trailing whitespace
 in order to achieve the respective game
 """
 
-class Wordle:
+class Wordle:  # expected 2 blank lines
     def __init__(self, target_word: str) -> None:
         # the word that is to be guessed
         self.target_word = target_word
@@ -42,7 +42,7 @@ class Wordle:
                     else:
                         # the letter is not in the right spot
                         if matches[try_letter] == 1:
-                            # only update to 2: wrong_place if it isn't 
+                            # only update to 2: wrong_place if it isn't  # trailing whitespace
                             # 2 or 3 yet
                             matches[try_letter] = 2
         return matches

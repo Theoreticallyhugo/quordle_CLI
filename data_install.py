@@ -1,12 +1,12 @@
 import os
-import requests, zipfile, io
+import requests, zipfile, io  # don't do multiple imports on one line
 from process_wordlist import process_DeReWo_wordlist_2012
 
-def download_and_process_data():
+def download_and_process_data():  # expected 2 blank lines
     # make the folder if it doesnt exist yet
     try:
         os.mkdir(os.path.join(os.curdir, "data"))
-    except:
+    except:  # do not use bare except
         pass
 
     # download the zip archive

@@ -12,7 +12,7 @@ gui.clear_screen()
 words = []
 while 42:
     # NOTE needs to be provided by game logic
-    # words = ["daily", "words", "think", "trial", "taper", "hoser", "house", "agony", "annoy"]
+    # words = ["daily", "words", "think", "trial", "taper", "hoser", "house", "agony", "annoy"]  # line too long
     # words = wordles[0].tries
 
     # NOTE needs to be provided by game logic
@@ -21,6 +21,7 @@ while 42:
     2: wrong_place
     3: right_place
     """
+    # a lot of trailing whitespaces
     # matches = (
     #             (
     #                 (1,2,1,1,3),

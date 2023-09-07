@@ -16,8 +16,8 @@ def get_word_list(path: str):
                 wordlist[i] = wordlist[i].strip("\n").lower()
         print(f"successfully read {path}")
     except:
-        wordlist = ("worta","wortb","wortc","wortd","worte")
-        print(f"couldn't read file at {path}.\n reverting to wordlist: {wordlist}")
+        wordlist = ("worta","wortb","wortc","wortd","worte")  # missing whitespace after ,
+        print(f"couldn't read file at {path}.\n reverting to wordlist: {wordlist}")  # line too long
     return wordlist
 
 
@@ -27,7 +27,7 @@ def get_data_folder(path: str):
         # with all of its data
         print("default folder data doesnt exist.")
         if input("would you like to automatically download the data? [Y/n]") \
-            not in ["n","N"]:
+            not in ["n","N"]:  # continuation line with same indent as next logical line + missing whitespace after ,
             download_and_process_data()
     target_words = get_word_list(os.path.join(path, "ziel_worte.txt"))
     guess_words = get_word_list(os.path.join(path, "rate_worte.txt"))
@@ -41,13 +41,13 @@ def get_args():
     """
     arg_par = argparse.ArgumentParser()
     arg_par.add_argument('--folder', '-f', default="./data",
-                        type=str, help='path to the data folder containing the ' +
+                        type=str, help='path to the data folder containing the ' +  # line too long
                          'files rate_worte.txt and ziel_worte.txt.')
     arg_par.add_argument('--rate_worte', '-r', default="",
-                        type=str, help='path to the file containing the ' +
+                        type=str, help='path to the file containing the ' +  # continuation line under-indented for visual indent
                          'five letter words for guessing')
     arg_par.add_argument('--ziel_worte', '-z', default="",
-                        type=str, help='path to the file containing the ' +
+                        type=str, help='path to the file containing the ' +  # continuation line under-indented for visual indent
                          'five letter words to be guessed')
     arg_par.add_argument('--quordle', '-q', default=False,
                          const=True, nargs='?',
@@ -59,7 +59,7 @@ def get_args():
     args = arg_par.parse_args()
     return args
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # expected 2 blank lines
     args = get_args()
 
     # get the wordlists
@@ -83,4 +83,4 @@ if __name__ == "__main__":
         sequence.game_loop()
     else:
         print("invalid option. add -q or -s")
-
+# too many blank lines at end of file

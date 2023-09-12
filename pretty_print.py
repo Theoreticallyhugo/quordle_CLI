@@ -1,9 +1,11 @@
+# FEEDBACK a header would be nice :)
+# I guess this was just for testing the gui functions? Will you delete it later?
 from colorama import Fore, Back, Style
 from random import randint
 
 def right_place(in_str):
     """
-    print any given string with the colourscheme assigned to letters in the 
+    print any given string with the colourscheme assigned to letters in the
     right place, and then reset to normal. no carriage return
     """
     print(Fore.BLACK + Back.GREEN + in_str, end="")
@@ -12,7 +14,7 @@ def right_place(in_str):
 
 def wrong_place(in_str):
     """
-    print any given string with the colourscheme assigned to letters in the 
+    print any given string with the colourscheme assigned to letters in the
     wrong place, and then reset to normal. no carriage return
     """
     print(Fore.BLACK + Back.YELLOW + in_str, end="")
@@ -26,7 +28,7 @@ def not_included(in_str):
     """
     print(Fore.WHITE + Back.LIGHTBLACK_EX + in_str, end="")
     print(Style.RESET_ALL, end="")
-    
+    # blank line contains whitespace
 
 def not_used(in_str):
     """
@@ -39,7 +41,7 @@ def not_used(in_str):
 
 def set_up_keyboard_use():
     """
-    create dictionary of each letter of the keyboard, with a list of int, 
+    create dictionary of each letter of the keyboard, with a list of int,  # trailing whitespace
     representing their use:
     0: unused
     1: not_included
@@ -61,7 +63,7 @@ def set_up_keyboard_use():
 
 def set_up_rand_keyboard_use():
     """
-    create dictionary of each letter of the keyboard, with a list of int, 
+    create dictionary of each letter of the keyboard, with a list of int, # trailing whitespace
     representing their use:
     0: unused
     1: not_included
@@ -87,8 +89,8 @@ def set_up_lines():
     """
     this determines the keyboard layout
     """
-    lines = ["qwertzuiopü", 
-             "asdfghjklöä", 
+    lines = ["qwertzuiopü",
+             "asdfghjklöä",
              "yxcvbnmß"]
     return lines
 

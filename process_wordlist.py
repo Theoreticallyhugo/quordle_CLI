@@ -1,6 +1,9 @@
+# FEEDBACK a header would be nice :)
 import os
 
-def process_DeReWo_wordlist_2012():
+def process_DeReWo_wordlist_2012():  # missing docstring
+    # FEEDBACK You could consider breaking down this function into multiple
+    # ones for modularisation
     with open(os.path.join(os.curdir, "data", "derewo-v-ww-bll-320000g-2012-12-31-1.0.txt"), "r", encoding="ISO-8859-15") as r:
         # get all the words
         lines = r.readlines()
@@ -8,9 +11,14 @@ def process_DeReWo_wordlist_2012():
         target_words = []
         # for each word
         for line in lines:
+            # FEEDBACK I think it's quite interesting that you did not use any
+            # nltk libraries for this at all and just worked with the structure
+            # of the file. Maybe you could try to play around with that and
+            # see if it improves things? I remember when playing, 'raben' was
+            # not a correct guess word and I had 'gelte' as target word once
             word = line.split(" ")[0].lower()
             if "(" in word:
-                # if the word can be inflected, dissect and, 
+                # if the word can be inflected, dissect and,
                 # put it into guess_words
                 stem = word.split("(")[0]
                 suffixes = word.split("(")[1][:-1].split(",")
@@ -25,7 +33,7 @@ def process_DeReWo_wordlist_2012():
                             guess_words.append(stem+suffix)
 
             elif len(word) == 5:
-                # if the word cant be inflected and is 5 characters long, 
+                # if the word cant be inflected and is 5 characters long,
                 # check whether it contains valid characters. if so,
                 # put it into the target words
 

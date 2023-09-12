@@ -1,3 +1,4 @@
+# I guess this will be deleted later?
 from wordle import Wordle
 from GUI import GUI
 
@@ -21,6 +22,7 @@ while 42:
     2: wrong_place
     3: right_place
     """
+    # a lot of trailing whitespaces
     # matches = (
     #             (
     #                 (1,2,1,1,3),

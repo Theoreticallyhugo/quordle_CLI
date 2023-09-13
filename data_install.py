@@ -2,6 +2,7 @@ import os
 import requests, zipfile, io
 from process_wordlist import process_DeReWo_wordlist_2012
 
+
 def download_and_process_data():
     # make the folder if it doesnt exist yet
     try:
@@ -10,7 +11,9 @@ def download_and_process_data():
         pass
 
     # download the zip archive
-    r = requests.get("https://www.ids-mannheim.de/fileadmin/kl/derewo/derewo-v-ww-bll-320000g-2012-12-31-1.0.zip")
+    r = requests.get(
+        "https://www.ids-mannheim.de/fileadmin/kl/derewo/derewo-v-ww-bll-320000g-2012-12-31-1.0.zip"
+    )
 
     # create the zip object from the downloaded data
     z = zipfile.ZipFile(io.BytesIO(r.content))
@@ -28,7 +31,7 @@ def download_and_process_data():
     process_DeReWo_wordlist_2012()
 
     # remove the old file we dont need anymore
-    os.system('rm data/derewo-v-ww-bll-320000g-2012-12-31-1.0.txt')
+    os.system("rm data/derewo-v-ww-bll-320000g-2012-12-31-1.0.txt")
 
 
 if __name__ == "__main__":

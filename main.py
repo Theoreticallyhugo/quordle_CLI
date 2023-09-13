@@ -16,7 +16,7 @@ def get_word_list(path: str):
                 wordlist[i] = wordlist[i].strip("\n").lower()
         print(f"successfully read {path}")
     except:
-        wordlist = ("worta","wortb","wortc","wortd","worte")
+        wordlist = ("worta", "wortb", "wortc", "wortd", "worte")
         print(f"couldn't read file at {path}.\n reverting to wordlist: {wordlist}")
     return wordlist
 
@@ -26,8 +26,13 @@ def get_data_folder(path: str):
         # if the default folder doesnt exist, ask for whether to create it,
         # with all of its data
         print("default folder data doesnt exist.")
-        if input("would you like to automatically download the data? [Y/n]") \
-            not in ["n","N"]:
+        if input(
+            "would you like to automatically download the data?\n"
+            + "this would create a data folder with the required files in: \n"
+            + f"'{os.getcwd()}'\n"
+            + "it is recommended to run main.py from the games root directory."
+            + "\n[Y/n]: "
+        ) not in ["n", "N"]:
             download_and_process_data()
     target_words = get_word_list(os.path.join(path, "ziel_worte.txt"))
     guess_words = get_word_list(os.path.join(path, "rate_worte.txt"))
@@ -40,24 +45,38 @@ def get_args():
     :return: the arguments parsed from the command line input
     """
     arg_par = argparse.ArgumentParser()
-    arg_par.add_argument('--folder', '-f', default="./data",
-                        type=str, help='path to the data folder containing the ' +
-                         'files rate_worte.txt and ziel_worte.txt.')
-    arg_par.add_argument('--rate_worte', '-r', default="",
-                        type=str, help='path to the file containing the ' +
-                         'five letter words for guessing')
-    arg_par.add_argument('--ziel_worte', '-z', default="",
-                        type=str, help='path to the file containing the ' +
-                         'five letter words to be guessed')
-    arg_par.add_argument('--quordle', '-q', default=False,
-                         const=True, nargs='?',
-                         help='')
-    arg_par.add_argument('--sequence', '-s', default=False,
-                         const=True, nargs='?',
-                         help='')
+    arg_par.add_argument(
+        "--folder",
+        "-f",
+        default="./data",
+        type=str,
+        help="path to the data folder containing the "
+        + "files rate_worte.txt and ziel_worte.txt.",
+    )
+    arg_par.add_argument(
+        "--rate_worte",
+        "-r",
+        default="",
+        type=str,
+        help="path to the file containing the " + "five letter words for guessing",
+    )
+    arg_par.add_argument(
+        "--ziel_worte",
+        "-z",
+        default="",
+        type=str,
+        help="path to the file containing the " + "five letter words to be guessed",
+    )
+    arg_par.add_argument(
+        "--quordle", "-q", default=False, const=True, nargs="?", help=""
+    )
+    arg_par.add_argument(
+        "--sequence", "-s", default=False, const=True, nargs="?", help=""
+    )
 
     args = arg_par.parse_args()
     return args
+
 
 if __name__ == "__main__":
     args = get_args()
@@ -83,4 +102,3 @@ if __name__ == "__main__":
         sequence.game_loop()
     else:
         print("invalid option. add -q or -s")
-

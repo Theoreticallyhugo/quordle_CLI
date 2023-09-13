@@ -2,6 +2,7 @@ from wordle import Wordle
 from GUI import GUI
 from random import randint
 
+
 class GameCore:
     def __init__(self, target_words, guess_words, quordle=True) -> None:
         # list of valid 5 letter words
@@ -14,17 +15,15 @@ class GameCore:
         self.wordles = []
         # gui interface class
         self.gui = GUI()
-        # words tried so far 
+        # words tried so far
         self.tries = []
         self.keyboard_use = {}
         # this determines the layout the keyboard is print
-        self.keyboard_layout = ["qwertzuiopü", 
-                                "asdfghjklöä", 
-                                "yxcvbnmß"]
+        self.keyboard_layout = ["qwertzuiopü", "asdfghjklöä", "yxcvbnmß"]
 
     def set_up_keyboard_use(self):
         """
-        create dictionary of each letter of the keyboard, with a list of int, 
+        create dictionary of each letter of the keyboard, with a list of int,
         representing their use:
         0: unused
         1: not_included
@@ -35,13 +34,15 @@ class GameCore:
         2 3
         initialised to game start/ no use yet
         """
-        self.keyboard_use = {"ä": [0,0,0,0],
-                        "ö": [0,0,0,0],
-                        "ü": [0,0,0,0],
-                        "ß": [0,0,0,0],}
+        self.keyboard_use = {
+            "ä": [0, 0, 0, 0],
+            "ö": [0, 0, 0, 0],
+            "ü": [0, 0, 0, 0],
+            "ß": [0, 0, 0, 0],
+        }
 
         for i in range(26):
-            self.keyboard_use[chr(ord("a") + i)] = [0,0,0,0]
+            self.keyboard_use[chr(ord("a") + i)] = [0, 0, 0, 0]
         return self.keyboard_use
 
     def update_keyboard_letter(self, letter, wordle_index, use, downgrade=False):
@@ -60,13 +61,16 @@ class GameCore:
             for letter_index, letter in enumerate(word):
                 unmatched = False
                 for i in range(4):
-
                     # === sequence mod start ===
                     # if were not playing wordle, meaning were playing sequence,
                     # we stop updating the letters for sub-wordles after the
                     # one that were matching
-                    if not self.quordle and unmatched or \
-                        not self.quordle and self.wordles[i].matched:
+                    if (
+                        not self.quordle
+                        and unmatched
+                        or not self.quordle
+                        and self.wordles[i].matched
+                    ):
                         self.update_keyboard_letter(letter, i, 1, True)
                         continue
 
@@ -92,7 +96,7 @@ class GameCore:
         used_indices = []
         valid_len = len(self.target_words) - 1
         for _ in range(4):
-            # find an unused index 
+            # find an unused index
             while 42:
                 index = randint(0, valid_len)
                 if index not in used_indices:
@@ -101,7 +105,6 @@ class GameCore:
             # to the list of wordles, append a new wordle, which is initialised
             # with the unique index we found earlier
             self.wordles.append(Wordle(self.target_words[index]))
-            
 
     def get_matches(self, quordle=True):
         # get data on all matches from all four wordles
@@ -115,17 +118,17 @@ class GameCore:
             # we stop updating the sub-wordles after the one that were
             # matching
             if not quordle and not wordle.matched:
-                for _ in range(3-index):
+                for _ in range(3 - index):
                     templist = []
                     # the gui only prints a word, if there is match info
                     # provided. so, we provided the zeros as match info,
                     # saying that it needs to be printed, but not giving any
                     # info on whats matching
                     for _ in range(matchlen):
-                        templist.append((0,0,0,0,0))
+                        templist.append((0, 0, 0, 0, 0))
                     matches.append(templist)
             # === sequence mod stop ===
-                
+
         return matches
 
     def update_gui(self):
@@ -148,7 +151,6 @@ class GameCore:
             tries.append(len(wordle.matches))
         self.gui.print_results(words, success, tries)
 
-
     def game_loop(self):
         # setup
         self.setup()
@@ -168,7 +170,7 @@ class GameCore:
                     for wordle in self.wordles:
                         print(wordle.target_word)
                 new_try = new_try.lower()
-                # make sure its a valid try 
+                # make sure its a valid try
                 if len(new_try) != 5:
                     # no words that dont have 5 letters
                     continue
@@ -187,10 +189,12 @@ class GameCore:
             self.update_keyboard_use()
 
             # if all words have been matched
-            if self.wordles[0].matched and \
-                self.wordles[1].matched and \
-                self.wordles[2].matched and \
-                self.wordles[3].matched:
+            if (
+                self.wordles[0].matched
+                and self.wordles[1].matched
+                and self.wordles[2].matched
+                and self.wordles[3].matched
+            ):
                 # print the latest info on the gamestate
                 # self.update_gui()
                 self.game_end_screen()
@@ -201,4 +205,3 @@ class GameCore:
                 self.game_end_screen()
                 print("sadly you didnt make it")
                 break
-                

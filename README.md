@@ -24,3 +24,16 @@ the process has been tested on MacOS and Linux Arch
 	- the obtained zip folder needs to be unpacked
 	- a ```data``` folder needs to be created within the repositories folder, which by default is ```quordle_CLI``` and the txt file from the zip folder needs to be placed within said folder
 	- to complete the installation, run `python process_wordlist.py
+
+## running quordle_cli 
+in order to run quordle_cli, you must always give it the flag for the game mode to be played. the simplest calls for the game therefore are `python main.py -q`and `python main.py -s`. the game uses two .txt files to source wordlists from. it can download, process and provide two default files, greatly simplifying the user experience. if no files are specified and the installation script hasnt run yet, the user is prompted, to run the installation script. getting the game ready is as simple as pressing enter. 
+if a non default experience is desired though, the necessary files can be provided in two ways.
+option 1:
+- call the two files ziel_worte.txt and rate_worte.txt respectively, and put them in one folder.
+- when running quordle provide either the absolute or relative path to that folder with the flag -f, like so: `python main.py -q -f <path_to_folder_with_the_two_.txt_files>
+- this works for both game modes
+option 2:
+- provide the relative or absolute paths to the two files individually.
+- `-r <path>` takes the path to the file of words that the user can enter for guessing
+- `-z <path>` takes the path to the file of words that may become the words to be guessed
+- both flags need to be provided simultaneously, in order to provide one full usable dataset. otherwise undefined behaviour may occur.

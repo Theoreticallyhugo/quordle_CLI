@@ -21,7 +21,7 @@ class GUI:
         meaning MacOS and most Linux distros. for windows the command is "cls"
         """
         # for windows
-        if os.name == "nt":  # FIXME not tested yet
+        if os.name == "nt":
             os.system("cls")
         # for mac and linux(here, os.name is 'posix')
         else:
@@ -87,7 +87,9 @@ class GUI:
         print(Fore.BLACK + Back.RED + in_str, end="")
         print(Style.RESET_ALL, end="")
 
-    def __print_keyboard_letter_use(self, keyboard_use, in_str, pos, show=True):
+    def __print_keyboard_letter_use(
+        self, keyboard_use, in_str, pos, show=True
+    ):
         """
         for a given letter, print its status for a given position, meaning sub-
         wordle, with the wordles having the following indices per position
@@ -225,7 +227,8 @@ class GUI:
                         # words[which word][which letter]
                         # matches[which box][which word][which letter]
                         self.__print_try_letter(
-                            words[word_index][i], matches[left_i][word_index][i]
+                            words[word_index][i],
+                            matches[left_i][word_index][i],
                         )
                 # print space between the two columns
                 print("    ", end="")
@@ -242,7 +245,8 @@ class GUI:
                         # words[which word][which letter]
                         # matches[which box][which word][which letter]
                         self.__print_try_letter(
-                            words[word_index][i], matches[right_i][word_index][i]
+                            words[word_index][i],
+                            matches[right_i][word_index][i],
                         )
             print("")
 

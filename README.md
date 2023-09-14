@@ -1,10 +1,13 @@
 # quordle_CLI
-a command line based quordle clone
+this game is a command line based quordle clone, 
+written by:
+Hugo Meinhof, 815220, me@theoreticallyhugo.de
 
 ### differences to the original quordle
 - this game does not allow the player to input the same word twice, as it would not benefit the player. This is a conscious decision and not a mistake.
 - just like with the original quordle, the player can cheat. instead of going online and googling todays quordle results, the player can enter ```!cheat``` which will display the words to be guessed.
 ## requirements
+- python 3.10
 - colorama
 - requests
 ## data installation
@@ -37,3 +40,13 @@ option 2:
 - `-r <path>` takes the path to the file of words that the user can enter for guessing
 - `-z <path>` takes the path to the file of words that may become the words to be guessed
 - both flags need to be provided simultaneously, in order to provide one full usable dataset. otherwise undefined behaviour may occur.
+
+## tested on:
+- MacOS Ventura
+	- 13.5.2 (22G91), arm64, apple M1
+	- 13.4.1 (c) (22F770820d), x86_64, intel I7
+- Arch Linux 14th sept 2023 (rolling release), x86_64, intel I5
+- Ubuntu 22.04.3 LTS, x86_64, intel I9
+- Manjaro Uranos 23.0.0 (rolling release), x86_64, intel I9
+- Raspbian GNU/ Linux 11 (bullseye), arm32, Cortex-A72
+- Windows 11 home 22H2, x86_64, intel I9

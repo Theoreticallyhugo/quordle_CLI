@@ -46,10 +46,17 @@ def get_data_folder(path: str):
     args:
         path: str of path to data folder
     """
-    if not os.path.isdir(path):
+    if (
+        not os.path.isdir(path)
+        or not os.path.isfile(os.path.join(path, "ziel_worte.txt"))
+        or not os.path.isfile(os.path.join(path, "rate_worte.txt"))
+    ):
         # if the default folder doesnt exist, ask for whether to create it,
         # with all of its data
-        print("default folder data doesnt exist.")
+        print(
+            "default folder data doesnt exist, or doesnt contain required "
+            + "files."
+        )
         if input(
             "would you like to automatically download the data?\n"
             + "this would create a data folder with the required files in: \n"
@@ -108,15 +115,26 @@ if __name__ == "__main__":
     args = get_args()
 
     # get the wordlists
-    if not (args.rate_worte != "" and args.ziel_worte != ""):
-        # only if both paths are specified, we dont checkt the data folder
+    if args.rate_worte == "" and args.ziel_worte == "":
+        # if neither -z nor -r is specified, we use the folder option as
+        # fallback, both if -f is specified and if not.
         target_words, guess_words = get_data_folder(path=args.folder)
     if args.rate_worte != "":
         # get the rate_worte file here
         guess_words = get_word_list(args.rate_worte)
+
+        # for safety: if the user specified -r, but not -z, use that list for
+        # both lists
+        if args.ziel_worte == "":
+            target_words = guess_words
     if args.ziel_worte != "":
         # get the ziel_worte file here
         target_words = get_word_list(args.ziel_worte)
+
+        # for safety: if the user specified -z, but not -r, use that list for
+        # both lists
+        if args.rate_worte == "":
+            guess_words = target_words
 
     if args.quordle:
         # run quordle

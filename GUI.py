@@ -7,13 +7,19 @@ this class provides a set of functions which allow printing complex data to the
 cli in simple, visually appealing formats. it is supposed to have a monoponly
 on printing to the cli, and does not save any data.
 """
-from colorama import Fore, Back, Style
 import os
+from colorama import Fore, Back, Style
 
 
 class GUI:
     @staticmethod
     def clear_screen():
+        """clear screen of the cli entirely
+
+        clearing the screen is done by sending a command directly into the cli.
+        this command generally is "clear" on unix based or unix like systems,
+        meaning MacOS and most Linux distros. for windows the command is "cls"
+        """
         # for windows
         if os.name == "nt":  # FIXME not tested yet
             os.system("cls")
@@ -26,6 +32,9 @@ class GUI:
         """
         print any given string with the colourscheme assigned to letters in the
         right place, and then reset to normal. no carriage return
+
+        args:
+            in_str: any string
         """
         print(Fore.BLACK + Back.GREEN + in_str, end="")
         print(Style.RESET_ALL, end="")
@@ -35,6 +44,9 @@ class GUI:
         """
         print any given string with the colourscheme assigned to letters in the
         wrong place, and then reset to normal. no carriage return
+
+        args:
+            in_str: any string
         """
         print(Fore.BLACK + Back.YELLOW + in_str, end="")
         print(Style.RESET_ALL, end="")
@@ -44,6 +56,9 @@ class GUI:
         """
         print any given string with the colourscheme assigned to letters not
         included, and then reset to normal. no carriage return
+
+        args:
+            in_str: any string
         """
         print(Fore.WHITE + Back.LIGHTBLACK_EX + in_str, end="")
         print(Style.RESET_ALL, end="")
@@ -53,6 +68,9 @@ class GUI:
         """
         print any given string with the colourscheme assigned to letters not used,
         and then reset to normal. no carriage return
+
+        args:
+            in_str: any string
         """
         print(Fore.BLACK + Back.WHITE + in_str, end="")
         print(Style.RESET_ALL, end="")
@@ -62,6 +80,9 @@ class GUI:
         """
         print any given string with the colourscheme assigned to words not
         guessed, and then reset to normal. no carriage return
+
+        args:
+            in_str: any string
         """
         print(Fore.BLACK + Back.RED + in_str, end="")
         print(Style.RESET_ALL, end="")
@@ -73,6 +94,14 @@ class GUI:
         0 1
         2 3
         set show to false, if only a coloured field, without the character is desired
+
+        args:
+            keyboard_use: dictionary of strings of letters of the alphabet,
+                where values are lists with four integers, saving the use
+                state for each sub_wordle
+            in_str: str of letter to process
+            pos: int index of the sub_wordle to get data from
+            show: bool whether to print the given str or a space
         """
         # capitalise output unless its an ß
         # show determines whether to print the letter on a coloured background,
@@ -105,6 +134,15 @@ class GUI:
         lines is a list of strings, where each string is one line of the keyboard.
         show true prints the character into all four of its fields, whilst false
         prints it only into the top right one
+
+        args:
+            keyboard_use: dictionary of strings of letters of the alphabet,
+                where values are lists with four integers, saving the use
+                state for each sub_wordle
+            keyboard_layout: list of strings, where each string represents
+                one line of the layout. each line is aligned to the left
+            show: bool whether to print the letters in each or only one of
+                their four coloured blocks
         """
         for line in keyboard_layout:
             for letter in line:
@@ -120,8 +158,11 @@ class GUI:
 
     def __print_try_letter(self, letter, state):
         """
-        printe a singular character, with the background colour being
+        print a singular character, with the background colour being
         determined by the integer provided in state
+
+        args:
+            letter: str of singular character to be printed
         """
         if state == 0:
             self.not_used(letter)
@@ -133,6 +174,20 @@ class GUI:
             self.right_place(letter)
 
     def __print_try_box_pair(self, words, matches, bot=False):
+        """display two sub_wordles side by side
+
+        since two wordles are always printed side by side, this function prints
+        one of such pairs.
+
+        args:
+            words: list of strings
+            matches: tuple of tuples, of tuples, of ints tuple containing four
+                tuples, one for each word that is to be guessed, containing one
+                tuple for each guess, containing the match data of the guess per
+                character
+            bot: bool determines the indices of the sub_wordles to use, meaning
+                that it determines which line is printed
+        """
         words_len = len(words)
         # even indices are left, odd are right
         # if bot false, we add 0 * 2, meaning nothing
@@ -199,12 +254,14 @@ class GUI:
         1: not_included
         2: wrong_place
         3: right_place
-        :param words: list of strings
-        :param matches: tuple of tuples, of tuples, of ints
-                        tuple containing four tuples, one for each word that is
-                        to be guessed,
-                        containing one tuple for each guess,
-                        containing the match data of the guess per character
+
+        args:
+            words: list of strings
+            matches: tuple of tuples, of tuples, of ints
+                tuple containing four tuples, one for each word that is
+                to be guessed,
+                containing one tuple for each guess,
+                containing the match data of the guess per character
         """
 
         # print all words for the top two boxes
@@ -216,6 +273,19 @@ class GUI:
         print("")
 
     def print_results(self, words: list, success: list, tries: list):
+        """when the game is over, print metrics
+
+        when the game is over, show the words that were to be guessed,
+        whether they were guessed, and how many tries it took to guess them.
+
+        args:
+            words: list of four str. each string is the goal/ target word for
+                the sub_wordle with the corresponding index
+            success: list of four bool. whether a word has been guessed for
+                the sub_wordle with the corresponding index
+            tries: list of four int. how many tries it took to guess the word
+                for the sub_wordle with the corresponding index
+        """
         for index, word in enumerate(words):
             # distinguish between even and odd indices in order to print two
             # words as results per line, with one layout for all the left

@@ -67,7 +67,9 @@ class GameCore:
             self.keyboard_use[chr(ord("a") + i)] = [0, 0, 0, 0]
         return self.keyboard_use
 
-    def update_keyboard_letter(self, letter, wordle_index, use, downgrade=False):
+    def update_keyboard_letter(
+        self, letter, wordle_index, use, downgrade=False
+    ):
         """update the use of a single letter in the keyboard_use data
 
         provides safer write access to the keyboard_use dictionary, allowing
@@ -271,10 +273,27 @@ class GameCore:
                 # print the latest info on the gamestate
                 # self.update_gui()
                 self.game_end_screen()
-                print("yay you got em all")
+                print(
+                    "congratulations, you manages to guess all words!"
+                    + "\n\nif you want to learn more about this games words, "
+                    + "check out the links below:"
+                )
+                for wordle in self.wordles:
+                    print(
+                        f"{wordle.target_word}: https://www.dwds.de/wb/{wordle.target_word}"
+                    )
                 break
             if len(self.tries) == 10:
                 # print the latest info on the gamestate
                 self.game_end_screen()
-                print("sadly you didnt make it")
+                print(
+                    "sadly you didnt find all words within ten tries, but "
+                    + "you still did well! dont give up and try again soon :D"
+                    + "\n\nif you want to learn more about this games words, "
+                    + "check out the links below:"
+                )
+                for wordle in self.wordles:
+                    print(
+                        f"{wordle.target_word}: https://www.dwds.de/wb/{wordle.target_word}"
+                    )
                 break

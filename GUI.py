@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+# Hugo Meinhof, 815220
+# Date: 2023-07-26
+"""implements GUI class that controls what is displayed
+
+this class provides a set of functions which allow printing complex data to the
+cli in simple, visually appealing formats. it is supposed to have a monoponly
+on printing to the cli, and does not save any data.
+"""
 from colorama import Fore, Back, Style
 import os
 

@@ -1,4 +1,8 @@
-"""
+# -*- coding: utf-8 -*-
+# Hugo Meinhof, 815220
+# Date: 2023-07-26
+"""main file to call from the cli
+
 call this file with the wordlist (a path to it)
 add --quordle or --sequence and this file will start the right game
 """

@@ -1,7 +1,13 @@
+# -*- coding: utf-8 -*-
+# Hugo Meinhof, 815220
+# Date: 2023-07-26
+"""implementation of the wordle class
+
+the wordle is a basic building block of quordle and sequence. it saves and 
+processes the necessary data, which can be used and accessed easily when
+creating a list of instances, to iterate through.
 """
-wordle is a basic building block of quordle and sequence. just times four it 
-in order to achieve the respective game
-"""
+
 
 class Wordle:
     def __init__(self, target_word: str) -> None:
@@ -42,7 +48,7 @@ class Wordle:
                     else:
                         # the letter is not in the right spot
                         if matches[try_letter] == 1:
-                            # only update to 2: wrong_place if it isn't 
+                            # only update to 2: wrong_place if it isn't
                             # 2 or 3 yet
                             matches[try_letter] = 2
         return matches
@@ -54,7 +60,7 @@ class Wordle:
         # check whether valid
         assert isinstance(try_word, str)
         assert len(try_word) == 5
-        # check whether not used yet 
+        # check whether not used yet
         assert try_word not in self.tries
         # add to the list of tries
         self.tries.append(try_word)

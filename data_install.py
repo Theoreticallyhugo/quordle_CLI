@@ -1,5 +1,16 @@
+# -*- coding: utf-8 -*-
+# Hugo Meinhof, 815220
+# Date: 2023-07-26
+"""installation script for the default word lists
+
+provides a function for downloading and processing the two default word lists,
+that are used in the quordle and sequence games. the funciton is also
+executed, if this file is run.
+"""
 import os
-import requests, zipfile, io
+import zipfile
+import io
+import requests
 from process_wordlist import process_DeReWo_wordlist_2012
 
 

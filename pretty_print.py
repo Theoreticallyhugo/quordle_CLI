@@ -1,9 +1,19 @@
-from colorama import Fore, Back, Style
+# -*- coding: utf-8 -*-
+# Hugo Meinhof, 815220
+# Date: 2023-07-26
+"""defining functions for printing with colour
+
+these functions provide modified print statements, which print in certain
+colours, having names that describe their use-case.
+it is mainly used for testing how to use colorama and store the data.
+"""
 from random import randint
+from colorama import Fore, Back, Style
+
 
 def right_place(in_str):
     """
-    print any given string with the colourscheme assigned to letters in the 
+    print any given string with the colourscheme assigned to letters in the
     right place, and then reset to normal. no carriage return
     """
     print(Fore.BLACK + Back.GREEN + in_str, end="")
@@ -12,7 +22,7 @@ def right_place(in_str):
 
 def wrong_place(in_str):
     """
-    print any given string with the colourscheme assigned to letters in the 
+    print any given string with the colourscheme assigned to letters in the
     wrong place, and then reset to normal. no carriage return
     """
     print(Fore.BLACK + Back.YELLOW + in_str, end="")
@@ -26,7 +36,7 @@ def not_included(in_str):
     """
     print(Fore.WHITE + Back.LIGHTBLACK_EX + in_str, end="")
     print(Style.RESET_ALL, end="")
-    
+
 
 def not_used(in_str):
     """
@@ -39,7 +49,7 @@ def not_used(in_str):
 
 def set_up_keyboard_use():
     """
-    create dictionary of each letter of the keyboard, with a list of int, 
+    create dictionary of each letter of the keyboard, with a list of int,
     representing their use:
     0: unused
     1: not_included
@@ -50,18 +60,21 @@ def set_up_keyboard_use():
     2 3
     initialised to game start/ no use yet
     """
-    keyboard_use = {"ä": [0,0,0,0],
-                    "ö": [0,0,0,0],
-                    "ü": [0,0,0,0],
-                    "ß": [0,0,0,0],}
+    keyboard_use = {
+        "ä": [0, 0, 0, 0],
+        "ö": [0, 0, 0, 0],
+        "ü": [0, 0, 0, 0],
+        "ß": [0, 0, 0, 0],
+    }
 
     for i in range(26):
-        keyboard_use[chr(ord("a") + i)] = [0,0,0,0]
+        keyboard_use[chr(ord("a") + i)] = [0, 0, 0, 0]
     return keyboard_use
+
 
 def set_up_rand_keyboard_use():
     """
-    create dictionary of each letter of the keyboard, with a list of int, 
+    create dictionary of each letter of the keyboard, with a list of int,
     representing their use:
     0: unused
     1: not_included
@@ -72,14 +85,20 @@ def set_up_rand_keyboard_use():
     2 3
     initialised to a random state
     """
-    keyboard_use = {"ä": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
-                    "ö": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
-                    "ü": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
-                    "ß": [randint(0,3),randint(0,3),randint(0,3),randint(0,3)],
+    keyboard_use = {
+        "ä": [randint(0, 3), randint(0, 3), randint(0, 3), randint(0, 3)],
+        "ö": [randint(0, 3), randint(0, 3), randint(0, 3), randint(0, 3)],
+        "ü": [randint(0, 3), randint(0, 3), randint(0, 3), randint(0, 3)],
+        "ß": [randint(0, 3), randint(0, 3), randint(0, 3), randint(0, 3)],
     }
 
     for i in range(26):
-        keyboard_use[chr(ord("a") + i)] = [randint(0,3),randint(0,3),randint(0,3),randint(0,3)]
+        keyboard_use[chr(ord("a") + i)] = [
+            randint(0, 3),
+            randint(0, 3),
+            randint(0, 3),
+            randint(0, 3),
+        ]
     return keyboard_use
 
 
@@ -87,9 +106,7 @@ def set_up_lines():
     """
     this determines the keyboard layout
     """
-    lines = ["qwertzuiopü", 
-             "asdfghjklöä", 
-             "yxcvbnmß"]
+    lines = ["qwertzuiopü", "asdfghjklöä", "yxcvbnmß"]
     return lines
 
 
@@ -124,22 +141,21 @@ def print_use(in_str, pos, show=True):
 def print_keyboard(lines, show=True):
     """
     print the use status of each letter of the keyboard, as defined by lines.
-    lines is a list of strings, where each string is one lines of the keyboard. 
-    show true prints the character into all four of its fields, whilst false 
+    lines is a list of strings, where each string is one lines of the keyboard.
+    show true prints the character into all four of its fields, whilst false
     prints it only into the top right one
     """
     for line in lines:
         for letter in line:
-            print_use(letter,0)
-            print_use(letter,1,show)
-            print(" ",end="")
+            print_use(letter, 0)
+            print_use(letter, 1, show)
+            print(" ", end="")
         print("")
         for letter in line:
-            print_use(letter,2,show)
-            print_use(letter,3,show)
-            print(" ",end="")
+            print_use(letter, 2, show)
+            print_use(letter, 3, show)
+            print(" ", end="")
         print("\n")
-
 
 
 # === EXAMPLE USE ===

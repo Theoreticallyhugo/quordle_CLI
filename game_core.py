@@ -1,3 +1,13 @@
+# -*- coding: utf-8 -*-
+# Hugo Meinhof, 815220
+# Date: 2023-07-26
+"""core of the game, provides class that with runnable game
+
+this files class combines all modules, to provide a game object that can be run
+easily. upon instantiation, provide the two word lists guess_words and 
+target_words, as well as the info for whether it runs quordle or sequence.
+then use the .game_loop() method on the configured game object, to run the game.
+"""
 from wordle import Wordle
 from GUI import GUI
 from random import randint

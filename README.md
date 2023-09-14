@@ -7,12 +7,11 @@ Hugo Meinhof, 815220, me@theoreticallyhugo.de
 - this game does not allow the player to input the same word twice, as it would not benefit the player. This is a conscious decision and not a mistake.
 - just like with the original quordle, the player can cheat. instead of going online and googling todays quordle results, the player can enter ```!cheat``` which will display the words to be guessed.
 ## requirements
-- python 3.10
+- python 3.10 (this version is tested)
 - colorama
 - requests
 ## data installation
 **as data, the program needs two files: ```rate_worte.txt``` and ```ziel_worte.txt```. the following describes methods for getting the two default files, but they can be replaced by any other file with the same name and format.**
-the process has been tested on MacOS and Linux Arch
 
 - **AUTOMATIC**:
 	- run `python data_install.py
@@ -50,3 +49,7 @@ option 2:
 - Manjaro Uranos 23.0.0 (rolling release), x86_64, intel I9
 - Raspbian GNU/ Linux 11 (bullseye), arm32, Cortex-A72
 - Windows 11 home 22H2, x86_64, intel I9
+
+## FAQ:
+- is it any good?
+	- yes

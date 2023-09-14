@@ -227,7 +227,7 @@ class GameCore:
             # add a new try
             while 42:
                 # first get the try
-                new_try = input()
+                new_try = input().strip()
                 if new_try == "":
                     self.update_gui()
                 elif new_try == "!cheat":

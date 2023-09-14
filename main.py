@@ -13,19 +13,39 @@ from data_install import download_and_process_data
 
 
 def get_word_list(path: str):
+    """load wordlist from .txt file
+
+    open and read from a .txt file, expecting one word per line of the files
+
+    args:
+        path: str of path to .txt file
+    returns: list of strings
+    """
     try:
         with open(path, "r") as r:
             wordlist = r.readlines()
             for i in range(len(wordlist)):
-                wordlist[i] = wordlist[i].strip("\n").lower()
+                wordlist[i] = wordlist[i].strip().strip("\n").lower()
         print(f"successfully read {path}")
     except:
         wordlist = ("worta", "wortb", "wortc", "wortd", "worte")
-        print(f"couldn't read file at {path}.\n reverting to wordlist: {wordlist}")
+        print(
+            f"couldn't read file at {path}.\n reverting to wordlist: {wordlist}"
+        )
     return wordlist
 
 
 def get_data_folder(path: str):
+    """read wordList files in data folder
+
+    if no path is provided upon start of the game, or there is a path to a
+    specific data folder, the program tries to load the data from the data
+    folder. if that doesnt exist, it promts the user for a download of the
+    necessary data
+
+    args:
+        path: str of path to data folder
+    """
     if not os.path.isdir(path):
         # if the default folder doesnt exist, ask for whether to create it,
         # with all of its data
@@ -62,14 +82,16 @@ def get_args():
         "-r",
         default="",
         type=str,
-        help="path to the file containing the " + "five letter words for guessing",
+        help="path to the file containing the "
+        + "five letter words for guessing",
     )
     arg_par.add_argument(
         "--ziel_worte",
         "-z",
         default="",
         type=str,
-        help="path to the file containing the " + "five letter words to be guessed",
+        help="path to the file containing the "
+        + "five letter words to be guessed",
     )
     arg_par.add_argument(
         "--quordle", "-q", default=False, const=True, nargs="?", help=""

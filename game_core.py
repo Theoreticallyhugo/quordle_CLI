@@ -10,11 +10,23 @@ then use the .game_loop() method on the configured game object, to run the game.
 """
 from wordle import Wordle
 from GUI import GUI
-from random import randint
+from random import sample
 
 
 class GameCore:
     def __init__(self, target_words, guess_words, quordle=True) -> None:
+        """initialise game object with game defining data
+
+        set up object wide variables, in part with provided arguments.
+        those arguments dictate what words can be used where and what gamemode
+        is being played.
+
+        args:
+            target_words: list of str. words from which four are selected
+                randomly, for the player to be guessed.
+            guess_words: list of str. words that are valid input for guessing.
+            quordle: bool. which gamemode to play
+        """
         # list of valid 5 letter words
         # assert isinstance(valid_words, list) or isinstance(valid_words, tuple)
         self.guess_words = guess_words
@@ -56,6 +68,20 @@ class GameCore:
         return self.keyboard_use
 
     def update_keyboard_letter(self, letter, wordle_index, use, downgrade=False):
+        """update the use of a single letter in the keyboard_use data
+
+        provides safer write access to the keyboard_use dictionary, allowing
+        for the update of a single character of a specific sub_wordle to a new
+        use status. downgrade=False ensures that no data is lost. downgrading/
+        losing data is desired when blanking a sub_wordle in the sequence mode
+        after it has been guessed.
+
+        args:
+            letter: str of character to update
+            wordle_index: int index of the sub_wordle
+            use: int new status of usage for the given letter and wordle_index
+            downgrade: bool allows for integers to grow, but not shrink
+        """
         # for wordle_index and use reference set_up_keyboard_use
         # if the use is a higher match than previously saved, update the value
         # downgrade=True means that we also dont only up, but also downgrade
@@ -67,6 +93,7 @@ class GameCore:
             self.keyboard_use[letter][wordle_index] = use
 
     def update_keyboard_use(self):
+        """update the usage of all letters for all sub_wordles"""
         for word_index, word in enumerate(self.tries):
             for letter_index, letter in enumerate(word):
                 unmatched = False
@@ -91,7 +118,8 @@ class GameCore:
 
                     try:
                         use = self.wordles[i].matches[word_index][letter_index]
-                    except:
+                    except IndexError:
+                        # default to use "unused" for nonexistent entries
                         use = 1
                     self.update_keyboard_letter(letter, i, use)
 
@@ -102,21 +130,32 @@ class GameCore:
         # set keyboard to default which is game start, can be overridden
         self.set_up_keyboard_use()
         # create list of wordles
+        # setting wordles to empty is only necessary if the game object is
+        # reused for multiple rounds of the game, which currently isnt the case,
+        # but may be in the future.
         self.wordles = []
-        used_indices = []
-        valid_len = len(self.target_words) - 1
-        for _ in range(4):
-            # find an unused index
-            while 42:
-                index = randint(0, valid_len)
-                if index not in used_indices:
-                    used_indices.append(index)
-                    break
+        # get a sample of four indices, meaning that it can be any four words,
+        # but they wont double, as random.sample() gives non-repeating results.
+        indices = sample(range(len(self.target_words)), 4)
+        for index in indices:
             # to the list of wordles, append a new wordle, which is initialised
             # with the unique index we found earlier
             self.wordles.append(Wordle(self.target_words[index]))
 
     def get_matches(self, quordle=True):
+        """get data on what letters are matching
+
+        create a list of four lists, where each lists index corresponds to a
+        sub_wordles index. each list contains tuples, where each tuples index
+        corresponds to a players guess. it has five ints, whose indices
+        correspond to the indices of the guess word, representing the matching
+        of that particular character
+        in case of mode sequence, dummy lists with the length of the current
+        tries are created for sub_wordles that arent unlocked yet, so that the
+        gui will print them, but without matching data
+
+        returns: list of four lists of tuples with five ints
+        """
         # get data on all matches from all four wordles
         matches = []
         for index, wordle in enumerate(self.wordles):
@@ -142,6 +181,11 @@ class GameCore:
         return matches
 
     def update_gui(self):
+        """run all methods that are needed to refresh the screen once
+
+        a new gamestate is displayed by first clearing the screen, then printing
+        the four sub_wordles, and then the keyboard_use
+        """
         self.gui.clear_screen()
         # print the latest info on tries
         self.gui.print_tries(self.tries, self.get_matches(self.quordle))
@@ -149,6 +193,11 @@ class GameCore:
         self.gui.print_keyboard(self.keyboard_use, self.keyboard_layout, False)
 
     def game_end_screen(self):
+        """update gui for game results at end of game
+
+        display the game end screen by first clearing the screen, then printing
+        the wordles, and finally the results
+        """
         self.gui.clear_screen()
         # print the latest info on tries
         self.gui.print_tries(self.tries, self.get_matches())
@@ -162,6 +211,11 @@ class GameCore:
         self.gui.print_results(words, success, tries)
 
     def game_loop(self):
+        """main method that runs one entire game, start to finish
+
+        this controls the entire game, for one full game, by running the setup
+        and then the main game loop, till the game is over.
+        """
         # setup
         self.setup()
         self.gui.clear_screen()
@@ -177,18 +231,27 @@ class GameCore:
                 if new_try == "":
                     self.update_gui()
                 elif new_try == "!cheat":
+                    self.update_gui()
+                    print("the words to guess are: ")
                     for wordle in self.wordles:
-                        print(wordle.target_word)
+                        print(wordle.target_word, end=" ")
+                    print("")
+                    continue
                 new_try = new_try.lower()
                 # make sure its a valid try
                 if len(new_try) != 5:
-                    # no words that dont have 5 letters
+                    self.update_gui()
+                    print(f"no words that dont have 5 letters: {new_try}")
                     continue
-                if new_try in self.tries:
-                    # no words that have been tried before
+                elif new_try in self.tries:
+                    self.update_gui()
+                    print(f"no words that have been tried before: {new_try}")
                     continue
-                if new_try in self.guess_words:
-                    # no words that arent in the dictionary
+                elif new_try not in self.guess_words:
+                    self.update_gui()
+                    print(f"no words that arent in the dictionary: {new_try}")
+                    continue
+                else:
                     break
             # then send it to all wordles and look for matches
             for wordle in self.wordles:

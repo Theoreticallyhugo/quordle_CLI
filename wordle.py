@@ -49,20 +49,26 @@ class Wordle:
             return [3, 3, 3, 3, 3]
 
         matches = [1, 1, 1, 1, 1]
-        for try_letter in range(5):
-            for tar_letter in range(5):
-                # if we find a matching letter
-                if try_word[try_letter] == self.target_word[tar_letter]:
-                    # if this letter is in the right spot
-                    if try_letter == tar_letter:
-                        # mark this position as 3: right_place
-                        matches[try_letter] = 3
-                    else:
-                        # the letter is not in the right spot
-                        if matches[try_letter] == 1:
-                            # only update to 2: wrong_place if it isn't
-                            # 2 or 3 yet
-                            matches[try_letter] = 2
+
+        # count all letters in the word to guess
+        target_dict = {}
+        for letter in set(self.target_word):
+            target_dict[letter] = self.target_word.count(letter)
+
+        # first set all correct letters and remove them from the dictionary
+        for i in range(5):
+            if try_word[i] == self.target_word[i]:
+                matches[i] = 3
+                target_dict[try_word[i]] -= 1
+
+        # find all letters that are not correct yet and still left in the 
+        # dictionary. meaning a letter in the wrong position will only be 
+        # flagged if such letter is left
+        for i in range(5):
+            if matches[i] == 1 and target_dict.get(try_word[i], 0) > 0:
+                matches[i] = 2
+                target_dict[try_word[i]] -= 1
+
         return matches
 
     def add_new_try(self, try_word):
